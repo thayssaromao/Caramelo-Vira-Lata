@@ -19,7 +19,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let window = UIWindow(windowScene: windowScene)
         
         // 2. Crie sua view controller inicial
-        let initialVC = InitialViewController()
+        let initialVC = ResultViewController(selectedOptionIndices: [0, 1, 2])
         
         // 3. Crie um UINavigationController com sua tela inicial como a raiz
         let navigationController = UINavigationController(rootViewController: initialVC)

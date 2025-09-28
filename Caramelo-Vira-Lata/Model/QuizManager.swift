@@ -11,112 +11,199 @@ struct QuizManager {
         Question(
             text: "Sua principal missão matinal é:",
             options: [
-                "CAÇAR O PÃO NA RUA", // Caramelo
-                "ACOMPANHAR O ÔNIBUS ATÉ O FINAL", // Pretinha (BRT)
-                "MARCAR PRESENÇA NA AULA", // Chico (UFSC)
-                "ESPERAR A NOTIFICAÇÃO DO INSS", // Tobias (INSS)
-                "PASSAR DEBAIXO DA CATRACA DO METRÔ", // Preta (Metrô SP)
-                "PROCURAR UM BARRACÃO QUENTE" // Neguinho (Beija-Flor)
+                "CAÇAR ALGO QUE SOBROU DE ONTEM",
+                "MARCAR PRESENÇA NA AULA",
+                "ACOMPANHAR AS NOVAS TRENDS DO TWITTER",
+                "FICAR DE BOA E TOMAR UM BANHO DE SOL",
+                "CHECAR SEUS AMIGOS",
+                "REVER AS PRIORIDADES DO DIA"
             ]
         ),
         Question(
-            text: "Quando ouve fogos de artifício, você:",
+            text: "Em qual reality show você se sairia melhor?",
             options: [
-                "CORRE PARA DENTRO DO MUSEU", // Marrom (Museu Nacional)
-                "SE ESCONDE NO ALVO DO ENEM", // Cão do Enem
-                "SAI LATINDO PARA A LUTA", // Manchinha (Protesto)
-                "FINGE QUE É SÓ UM GRILO GIGANTE",
-                "MANDA UM LATIDO DE BEIJA-FLOR", // Neguinho (Beija-Flor)
-                "PROCURA O ABRAÇO CARAMELO" // Caramelo
+            "A FAZENDA", // ⭐️ Caramelo (Sobrevivência/Caos)
+            "Bake Off Brasil", // ⭐️ Neguinho (Serviço/Rotina)
+            "Big Brother Brasil", // ⭐️ Chico (Luta/Ativismo)
+            "De Férias com o Ex", // ⭐️ Caramelo (Fama/Vibe)
+            "MasterChef Brasil", // ⭐️ Neguinho (Rotina/Protocolo)
+            "Um documentário sério" // ⭐️ Frajola (Intelectual/Nicho)
             ]
         ),
         Question(
-            text: "Qual sua cor favorita de crachá?",
-            options: [
-                "AMARELO MILHO (O MEU DE NASCENÇA)", // Caramelo (Cor)
-                "AZUL BEIJA-FLOR", // Neguinho (Beija-Flor)
-                "PRETO TOTAL", // Preta (Cor)
-                "VERMELHO DE PROTESTO", // Manchinha (Protesto)
-                "VERDE LIMALIMÃO PARA CAMUFLAGEM",
-                "MARROM RESISTÊNCIA" // Marrom
-            ]
-        ),
+           text: "Você prefere ser reconhecido por:",
+           options: [
+               "Ser alguém carismático", // ⭐️ Caramelo (0)
+               "Ser leal e confiável, a base da comunidade", // ⭐️ Neguinho (1)
+               "Ser a voz da mudança em uma causa justa", // ⭐️ Chico (2)
+               "Ser um sucesso viral ou o ícone de uma geração", // ⭐️ Caramelo (3)
+               "Ser essencial e servir bem na sua função", // ⭐️ Neguinho (4)
+               "Ser um intelectual respeitado e qualificado" // ⭐️ Frajola (5)
+           ]
+       ),
         Question(
             text: "No rolê, qual seu ponto de encontro ideal?",
             options: [
-                "O PRÓXIMO PONTO DE ÔNIBUS", // Pretinha (BRT)
-                "A PORTA DO INSS", // Tobias (INSS)
-                "O CAMPI DA UFSC", // Chico (UFSC)
-                "A PORTA DO ENEM", // Cão do Enem
-                "PRÓXIMO AO BUFFET ESCONDIDO",
-                "QUALQUER LUGAR VIRA LATA (SOU GLOBAL)" // Caramelo
+                "PRAÇA LOTADA", // Pretinha (BRT)
+                "BAR DA ESQUINA", // Tobias (INSS)
+                "UM LUGAR CALMO SEM MUITO FUZUE", // Chico (UFSC)
+                "ONDE SER SERÁ", // Cão do Enem
+                "ONDE QUISEREM QUE SEJA",
+                "ACHO QUE NAO VOU.." // Caramelo
             ]
         ),
         Question(
             text: "Seu hobby principal é:",
             options: [
-                "ACOMPANHAR MANIFESTAÇÃO", // Manchinha (Protest)
-                "TIRAR COCHILO NA AULA", // Chico (University)
-                "FICAR SÓ ESPERANDO O PRÓXIMO PETISCO",
-                "POSAR DE MODELO DE CAMPANHA (PF)", // Caramelo PF
-                "VIRAR MEME EM GRUPO DE WHATSAPP", // Caramelo (Meme)
-                "FAZER AMIZADE NO GUICHÊ DE ATENDIMENTO" // Tobias (INSS)
+                "ROLAR O TIKTOK POR 12H", // Manchinha (Protest)
+                "SOCIALZINHA COM OS DE FÉ", // Chico (University)
+                "ESTUDAR",
+                "ANDAR POR AI", // Caramelo PF
+                "APRENDER ALGO NOVO", // Caramelo (Meme)
+                "LER LER LER" // Tobias (INSS)
             ]
         ),
         Question(
-            text: "O que você carrega na mochila (ou boca)?",
+            text: "O que você carrega na mochila?",
             options: [
-                "LIVROS DE EXTENSÃO UNIVERSITÁRIA", // Frajola (UFRJ)
-                "UMA COXINHA ESQUECIDA DO ALMOÇO",
-                "O CRÁCHÁ OFICIAL DO BRT", // Pretinha (BRT)
-                "UM RESTO DE SAMBA", // Neguinho (Beija-Flor)
-                "A COLEIRA OFICIAL DA PF", // Caramelo PF
-                "O BONECO DE PELÚCIA (QUE SOU EU MESMO)" // Caramelo (Merchandise)
+                "UNS DOCINHOS ALEATÓRIOS", // Frajola (UFRJ)
+                "MARMITA, CARTÕES, CPF",
+                "CANETAS, FOLHAS DE NOTA", // Pretinha (BRT)
+                "TUDO QUE CABER ESTA NA MINHA BOLSA", // Neguinho (Beija-Flor)
+                "PRIMEIROS SOCORROS, LENCINHOS", // Caramelo PF
+                "BLOCO DE NOTAS CHEIO DE ANOTAÇOES" // Caramelo (Merchandise)
             ]
         ),
         Question(
             text: "Você é mais conhecido por ser:",
             options: [
-                "DÓCIL E CONSTANTE", // Preta (Metrô SP)
-                "SÍMBOLO DE RESISTÊNCIA E SOBREVIVÊNCIA", // Marrom (Museum Fire)
-                "O ZELADOR OFICIAL DO CAMPUS", // Chico (University)
-                "UM TALISMÃ DE PROVA", // Cão do Enem
-                "CARISMÁTICO E ICÔNICO DA NAÇÃO", // Caramelo
-                "PARTE DA EQUIPE DE ATENDIMENTO" // Tobias (INSS)
+                "CARISMÁTICO E ENGRAÇADO", // Preta (Metrô SP)
+                "GRANDE COMPANHEIRO", // Marrom (Museum Fire)
+                "A VOZ DA RAZÃO", // Chico (University)
+                "INCRIVELMENTE FOLGADO", // Cão do Enem
+                "MELHOR FUNCIONÁRIO DO MÊS", // Caramelo
+                "MUITO SÉRIO" // Tobias (INSS)
             ]
         ),
         Question(
-            text: "Seu jeito de se locomover é:",
-            options: [
-                "NO METRÔ (PELA CATRACA)", // Preta (Metro)
-                "CORRENDO ATRÁS DA CARRETA DE MUDANÇA",
-                "DE BRT (TODOS OS DIAS)", // Pretinha (BRT)
-                "A PÉ, SEM PRESSA, POR QUAISQUER RUAS",
-                "NO CAMINHÃO DA ESCOLA DE SAMBA", // Neguinho (Samba)
-                "FUGITIVO DO CARREFOUR" // Manchinha (Escape/Protest)
-            ]
-        ),
+                   text: "Você se sente mais convencido por:",
+                   options: [
+                       "O que o seu 'coração' diz, a intuição", // ⭐️ Caramelo (0)
+                       "O consenso geral, o que é melhor para a maioria", // ⭐️ Neguinho (1)
+                       "O argumento mais lógico apoiado por dados", // ⭐️ Chico (2)
+                       "O que já deu certo no passado e é seguro", // ⭐️ Caramelo (3)
+                       "A opinião de quem você mais confia", // ⭐️ Neguinho (4)
+                       "A citação de um pensador famoso" // ⭐️ Frajola (5)
+                   ]
+               ),
         Question(
             text: "O que te inspira a continuar a jornada?",
             options: [
-                "O PRÓXIMO BANQUETE DE OSSOS",
-                "UM TÍTULO HONORÁRIO", // Chico (UFSC)
-                "A LUTA POR DIREITOS", // Manchinha (Rights)
-                "O CHEIRO DE CHURRASCO NA ESQUINA",
-                "O CALOR DO FOGO APÓS A TRAGÉDIA", // Marrom (Resilience)
-                "SER O ÍCONE DA NAÇÃO INTEIRA" // Caramelo (Icon)
+                "A chance de virar estampa de camiseta", // ⭐️ Caramelo (0)
+                "O sorriso de quem foi ajudado por mim", // ⭐️ Neguinho (1)
+                "A justiça, custe o que custar", // ⭐️ Chico (2)
+                "O próximo feriado", // ⭐️ Caramelo (3)
+                "O sentimento de dever cumprido", // ⭐️ Neguinho (4)
+                "O conhecimento puro, simples e sem fim." // ⭐️ Frajola (5)
             ]
         ),
         Question(
-            text: "QUAL O SEU DESTINO FINAL? (Selecione um final)",
+            text: "QUAL O SEU DESTINO FINAL?",
             options: [
-                "SER O CARAMELO, O EU MESMO",
-                "A LUTA NÃO ACABA",
-                "NO PALÁCIO DO SAMBA",
-                "O MURO DA UNIVERSIDADE",
-                "MEU PRÓPRIO CRÁCHÁ NO INSS",
-                "A PRÓXIMA RODOVIÁRIA"
+                "Viver a vida no modo free play", // ⭐️ Caramelo (0)
+                "Fazer parte de uma equipe, sendo a base.", // ⭐️ Neguinho (1)
+                "Ser a chama que acende a mudança", // ⭐️ Chico (2)
+                "Me tornar o ícone de uma geração inteira", // ⭐️ Caramelo (3)
+                "Ter meu próprio lugar e rotina definida", // ⭐️ Neguinho (4)
+                "Ser o mestre na minha área." // ⭐️ Frajola (5)
             ]
         )
     ]
+}
+
+class QuizResultManager {
+    private let selectedOptionIndices: [Int]
+
+    init(selectedOptionIndices: [Int]) {
+        self.selectedOptionIndices = selectedOptionIndices
+    }
+
+    private let profiles: [String: QuizResult] = [
+        "Caramelo": QuizResult(
+            title: "VIRA LATA CARAMELO\n(O ÍCONE NACIONAL)",
+            imageName: "caramelo",
+            description: "O Caramelo é mais que um cão, é um símbolo! Você é adaptável, carismático e está sempre onde precisa estar, transformando o básico em icônico.",
+            infoText: "O vira-lata caramelo é o verdadeiro brasileiro. Adaptabilidade e carisma são sua marca registrada. Você se encaixa em qualquer situação e transforma o básico em icônico."
+        ),
+        "Neguinho": QuizResult(
+            title: "VIRA LATA NEGUINHO\n(O SAMBISTA DA RODA)",
+            imageName: "Neguinho",
+            description: "Você é leal à sua comunidade e vive com paixão. Enraizado na cultura e na rotina, seu coração bate no ritmo da bateria.",
+            infoText: "Assim como o vira-lata Neguinho, você é parte da comunidade. Valoriza as conexões sociais e a alegria de viver, transformando todo dia em um um grande desfile."
+        ),
+        "Chico": QuizResult(
+            title: "VIRA LATA CHICO\n(O INTELECTUAL/ATIVISTA)",
+            imageName: "caramelo2",
+            description: "Sua vida é dedicada a uma causa, seja ela o conhecimento ou a justiça. Você é engajado, curioso e inspira as pessoas a lutar por um mundo melhor.",
+            infoText: "Você é um cão de causas. Seja no campus ou na manifestação, sua presença é um lembrete de que o aprendizado e a luta por direitos são essenciais para a sociedade."
+        ),
+        "Frajola": QuizResult(
+            title: "VIRA LATA FRAJOLA\n(O UNIVERSITÁRIO)",
+            imageName: "Frajola", // ⚠️ Crie este asset
+            description: "Seu lar é o campus! Você é um estudante honorário, protegido por projetos de extensão e mais interessado em conhecimento do que em ossos. Sua presença acalma e inspira.",
+            infoText: "Frajola representa o amor à instituição. Você é um espírito livre, mas adora a segurança da comunidade acadêmica, onde se sente valorizado e amado."
+        ),
+        // ⭐️ NOVO PERFIL: Coitadolandia (Resultado de baixo engajamento ou empate)
+        "Coitadolandia": QuizResult(
+            title: "VIRA LATA COITADOLANDIA\n(O INDEFINIDO)",
+            imageName: "Coitadolandia", // ⚠️ Crie este asset
+            description: "Hmm, parece que você ainda está se encontrando. Suas respostas ficaram divididas demais! Tente de novo e descubra sua verdadeira vocação vira-lata!",
+            infoText: "Você é um mistério, um pouco de tudo e nada ao mesmo tempo. A vida na Coitadolandia é temporária; encontre seu propósito e volte para o quiz!"
+        )
+    ]
+
+    private func calculateScores() -> [String: Int] {
+        var scores: [String: Int] = ["Caramelo": 0, "Neguinho": 0, "Chico": 0, "Frajola": 0]
+
+        for index in selectedOptionIndices {
+            switch index {
+            case 0, 3:
+                scores["Caramelo"]! += 1
+            case 1, 4:
+                scores["Neguinho"]! += 1
+            case 2, 5:
+                scores["Chico"]! += 1
+            case 5: scores["Frajola"]! += 1 // Institucional/Acadêmico
+            default:
+                break
+            }
+        }
+        return scores
+    }
+
+    func getResult() -> QuizResult {
+        let scores = calculateScores()
+        
+        // Encontra o perfil com a maior pontuação (excluindo Coitadolandia que é um resultado especial)
+        let bestScore = scores.values.max() ?? 0
+        let winningProfiles = scores.filter { $0.value == bestScore }
+        
+        // CRITÉRIO 1: Coitadolandia (Empate ou Engajamento muito baixo)
+        if bestScore <= 1 || winningProfiles.count > 1 {
+             return profiles["Coitadolandia"]!
+        }
+        
+        // CRITÉRIO 2: Frajola vs. Chico
+        if winningProfiles.keys.contains("Chico") || winningProfiles.keys.contains("Frajola") {
+            if (scores["Frajola"] ?? 0) > (scores["Chico"] ?? 0) {
+                return profiles["Frajola"]!
+            }
+            // Se Chico/Frajola for o vencedor, mas Chico for maior ou igual, retorna Chico
+            return profiles["Chico"]!
+        }
+        
+        // CRITÉRIO 3: Caramelo ou Neguinho
+        let winningProfileName = winningProfiles.keys.first ?? "Caramelo"
+        return profiles[winningProfileName]!
+    }
 }

@@ -4,7 +4,6 @@
 //
 //  Created by Thayssa Romão on 28/09/25.
 //
-
 import UIKit
 
 // MARK: - Result Models
@@ -14,61 +13,6 @@ struct QuizResult {
     let imageName: String
     let description: String
     let infoText: String
-}
-
-// MARK: - Quiz Result Manager (Lógica de Pontuação)
-
-class QuizResultManager {
-    private let selectedOptionIndices: [Int]
-
-    init(selectedOptionIndices: [Int]) {
-        self.selectedOptionIndices = selectedOptionIndices
-    }
-
-    private let profiles: [String: QuizResult] = [
-        "Caramelo": QuizResult(
-            title: "VIRA LATA CARAMELO\n(O ÍCONE NACIONAL)",
-            imageName: "caramelo",
-            description: "O Caramelo é mais que um cão, é um símbolo! Você é adaptável, carismático e está sempre onde precisa estar, transformando o básico em icônico.",
-            infoText: "O vira-lata caramelo é o verdadeiro brasileiro. Adaptabilidade e carisma são sua marca registrada. Você se encaixa em qualquer situação e transforma o básico em icônico."
-        ),
-        "Neguinho": QuizResult(
-            title: "VIRA LATA NEGUINHO\n(O SAMBISTA DA RODA)",
-            imageName: "Neguinho",
-            description: "Você é leal à sua comunidade e vive com paixão. Enraizado na cultura e na rotina, seu coração bate no ritmo da bateria.",
-            infoText: "Assim como Neguinho da Beija-Flor, você é parte da comunidade. Valoriza as conexões sociais e a alegria de viver, transformando todo dia em um desfile."
-        ),
-        "Chico": QuizResult(
-            title: "VIRA LATA CHICO\n(O INTELECTUAL/ATIVISTA)",
-            imageName: "caramelo2",
-            description: "Sua vida é dedicada a uma causa, seja ela o conhecimento ou a justiça. Você é engajado, curioso e inspira as pessoas a lutar por um mundo melhor.",
-            infoText: "Você é um cão de causas. Seja no campus ou na manifestação, sua presença é um lembrete de que o aprendizado e a luta por direitos são essenciais para a sociedade."
-        )
-    ]
-
-    private func calculateScores() -> [String: Int] {
-        var scores: [String: Int] = ["Caramelo": 0, "Neguinho": 0, "Chico": 0]
-
-        for index in selectedOptionIndices {
-            switch index {
-            case 0, 3:
-                scores["Caramelo"]! += 1
-            case 1, 4:
-                scores["Neguinho"]! += 1
-            case 2, 5:
-                scores["Chico"]! += 1
-            default:
-                break
-            }
-        }
-        return scores
-    }
-
-    func getResult() -> QuizResult {
-        let scores = calculateScores()
-        let winningProfileName = scores.max { $0.value < $1.value }?.key ?? "Caramelo"
-        return profiles[winningProfileName]!
-    }
 }
 
 // MARK: - Result View Controller
@@ -98,6 +42,8 @@ class ResultViewController: UIViewController {
         resultView.onArrowButtonTapped = { [weak self] in
             self?.presentInfoSheet()
         }
+        
+        self.navigationItem.hidesBackButton = true
     }
     
     private func presentInfoSheet() {
@@ -119,7 +65,6 @@ class ResultViewController: UIViewController {
 class ResultView: UIView {
     var onArrowButtonTapped: (() -> Void)?
     
-    // Fundo fixo
     private let bg: UIImageView = {
         let imageView = UIImageView(image: UIImage(named: "bgResult"))
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -127,12 +72,10 @@ class ResultView: UIView {
         return imageView
     }()
     
-    // Imagem dinâmica (cachorro do resultado)
     private let dogImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.contentMode = .scaleAspectFit
-//        imageView.backgroundColor = .black
         return imageView
     }()
     
@@ -142,11 +85,7 @@ class ResultView: UIView {
         label.numberOfLines = 3
         label.textColor = .white
         label.textAlignment = .center
-        if let customFont = UIFont(name: "Bahiana", size: 55) {
-            label.font = customFont
-        } else {
-            label.font = UIFont.systemFont(ofSize: 55, weight: .bold)
-        }
+        label.font = UIFont(name: "Bahiana", size: 55) ?? UIFont.systemFont(ofSize: 55, weight: .bold)
         return label
     }()
     
@@ -172,7 +111,7 @@ class ResultView: UIView {
     
     func configure(with result: QuizResult) {
         label.text = result.title
-        dogImage.image = UIImage(named: result.imageName) // só o cachorro muda
+        dogImage.image = UIImage(named: result.imageName)
     }
     
     override init(frame: CGRect) {
@@ -196,7 +135,6 @@ class ResultView: UIView {
         addSubview(dogImage)
         addSubview(label)
         addSubview(arrowButton)
-        
         sendSubviewToBack(bg)
     }
 
@@ -212,11 +150,11 @@ class ResultView: UIView {
             spiral.centerXAnchor.constraint(equalTo: centerXAnchor),
             
             dogImage.centerXAnchor.constraint(equalTo: spiral.centerXAnchor),
-                        dogImage.centerYAnchor.constraint(equalTo: spiral.centerYAnchor),
-                        dogImage.widthAnchor.constraint(equalToConstant: 250),
-                        dogImage.heightAnchor.constraint(equalToConstant: 250),
+            dogImage.centerYAnchor.constraint(equalTo: spiral.centerYAnchor),
+            dogImage.widthAnchor.constraint(equalToConstant: 250),
+            dogImage.heightAnchor.constraint(equalToConstant: 250),
             
-            label.centerXAnchor.constraint(equalTo: centerXAnchor, constant: 0),
+            label.centerXAnchor.constraint(equalTo: centerXAnchor),
             label.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 170),
             label.widthAnchor.constraint(equalToConstant: 360),
             
@@ -226,16 +164,25 @@ class ResultView: UIView {
     }
 }
 
-
 // MARK: - Info Sheet View Controller
 
 class InfoSheetViewController: UIViewController {
+    
     private let grabberView: UIView = {
         let view = UIView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.backgroundColor = .systemGray4
         view.layer.cornerRadius = 2.5
         return view
+    }()
+    
+    private let closeButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.translatesAutoresizingMaskIntoConstraints = false
+        button.setTitle("✕", for: .normal)
+        button.titleLabel?.font = UIFont.systemFont(ofSize: 30, weight: .bold)
+        button.setTitleColor(.label, for: .normal)
+        return button
     }()
     
     private let titleLabel: UILabel = {
@@ -261,16 +208,53 @@ class InfoSheetViewController: UIViewController {
     func configure(with description: String) {
         descriptionLabel.text = description
     }
-
+//
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        view.backgroundColor = .white  // fundo liso
+        view.backgroundColor = .white
+        closeButton.addTarget(self, action: #selector(closeTapped), for: .touchUpInside)
         setupViews()
+    }
+
+    @objc private func closeTapped() {
+        // Volta para a tela inicial substituindo a pilha do Navigation Controller
+        let initialVC = InitialViewController()
+        
+        if let presenter = self.presentingViewController {
+            // Caso o apresentador seja um UINavigationController
+            if let navController = presenter as? UINavigationController {
+                self.dismiss(animated: true) {
+                    navController.setViewControllers([initialVC], animated: true)
+                }
+            }
+            // Caso o apresentador esteja dentro de um UINavigationController
+            else if let navController = presenter.navigationController {
+                self.dismiss(animated: true) {
+                    navController.setViewControllers([initialVC], animated: true)
+                }
+            }
+            // Sem Navigation Controller por baixo: apresenta a tela inicial em full screen
+            else {
+                self.dismiss(animated: true) {
+                    initialVC.modalPresentationStyle = .fullScreen
+                    presenter.present(initialVC, animated: true)
+                }
+            }
+        }
+        // Caso raro: este controller está dentro de um nav controller
+        else if let navController = self.navigationController {
+            navController.setViewControllers([initialVC], animated: true)
+        }
+        // Fallback: apresenta modalmente
+        else {
+            initialVC.modalPresentationStyle = .fullScreen
+            self.present(initialVC, animated: true)
+        }
     }
 
     private func setupViews() {
         view.addSubview(grabberView)
+        view.addSubview(closeButton)
         view.addSubview(titleLabel)
         view.addSubview(descriptionLabel)
         
@@ -279,6 +263,11 @@ class InfoSheetViewController: UIViewController {
             grabberView.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             grabberView.widthAnchor.constraint(equalToConstant: 40),
             grabberView.heightAnchor.constraint(equalToConstant: 5),
+            
+            closeButton.topAnchor.constraint(equalTo: view.topAnchor, constant: 15),
+            closeButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            closeButton.widthAnchor.constraint(equalToConstant: 40),
+            closeButton.heightAnchor.constraint(equalToConstant: 40),
             
             titleLabel.topAnchor.constraint(equalTo: grabberView.bottomAnchor, constant: 20),
             titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
