@@ -71,7 +71,7 @@ class DinamicView:UIView {
         let text = UILabel()
         text.translatesAutoresizingMaskIntoConstraints = false
         text.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
-        text.font = UIFont(name: "Bahiana-Regular", size: 32)
+        text.font = UIFont(name: "Bahiana-Regular", size: 42)
         text.textAlignment = .center
         text.text = "corro atras"
         text.numberOfLines = 1
@@ -102,6 +102,7 @@ class DinamicView:UIView {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "bgDinamic")
+        
         
         
         return imageView

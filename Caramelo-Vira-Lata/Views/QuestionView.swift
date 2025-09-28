@@ -9,19 +9,90 @@ import UIKit
 
 class QuestionViewController: UIViewController {
     private let questionView = QuestionView()
+    private let progressBar = UIProgressView(progressViewStyle: .default)
+    private var hasAnimated = false   // <- controla execução única
+    
+    private var cardOriginalTransform: CGAffineTransform = .identity
+
+    
     override func loadView() {
         self.view = questionView
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    
+        setupProgressBar()
+        cardOriginalTransform = questionView.cardContainer.transform
+
+        // 2. Posicione o card FORA da tela ANTES dela aparecer
+                questionView.cardContainer.transform = cardOriginalTransform.translatedBy(x: 0, y: self.view.bounds.height)
+           
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
+        // Só roda uma vez
+        if !hasAnimated {
+            hasAnimated = true
+            animateCard()
+            startLoading()
+        }
+    }
+    
+    private func setupProgressBar() {
+        progressBar.translatesAutoresizingMaskIntoConstraints = false
+        progressBar.progress = 0
+        progressBar.tintColor = UIColor(red: 0.263, green: 0.22, blue: 0.875, alpha: 1)
+        progressBar.trackTintColor = UIColor.lightGray.withAlphaComponent(0.3)
+        progressBar.layer.cornerRadius = 6
+        progressBar.clipsToBounds = true
         
+        view.addSubview(progressBar)
+        
+        NSLayoutConstraint.activate([
+            progressBar.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 40),
+            progressBar.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -40),
+            progressBar.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -40),
+            progressBar.heightAnchor.constraint(equalToConstant: 8)
+        ])
+    }
+    
+    private func animateCard() {
+        UIView.animate(
+            withDuration: 1.0,
+            delay: 0,
+            usingSpringWithDamping: 0.6,
+            initialSpringVelocity: 0.8,
+            options: [.curveEaseOut],
+            animations: {
+                self.questionView.cardContainer.transform = self.cardOriginalTransform            },
+            completion: nil
+        )
+    }
+    
+    private func startLoading() {
+        let duration: TimeInterval = 5.0
+
+        // 1. ANIMAÇÃO VISUAL: Força a barra a animar ao longo de 5 segundos
+        // Nós definimos o valor final e mandamos a view animar essa mudança de layout.
+        self.progressBar.setProgress(1.0, animated: false) // Define o valor final
+        UIView.animate(withDuration: duration, delay: 0.0, options: .curveLinear, animations: {
+            self.view.layoutIfNeeded() // Anima a mudança visual ao longo da duração
+        }, completion: nil) // O completion aqui não é mais usado para navegar
+
+
+        // 2. LÓGICA DE TEMPO: Garante a navegação após 5 segundos
+        // Isso cria um "timer" que executa o código no bloco após o tempo especificado.
+        DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
+            self.goToNextScreen()
+        }
+    }
+    
+    
+    private func goToNextScreen() {
+        let nextVC = DinamicViewController()
+        self.navigationController?.pushViewController(nextVC, animated: true)
     }
 }
 
@@ -47,14 +118,13 @@ class QuestionView:UIView {
         let container = UIView()
         container.translatesAutoresizingMaskIntoConstraints = false
         
-        // Fundo azul inclinado
         let backLayer = UIView()
         backLayer.backgroundColor = UIColor(red: 0.278, green: 0.224, blue: 0.882, alpha: 1)
         backLayer.layer.cornerRadius = 30
         backLayer.translatesAutoresizingMaskIntoConstraints = false
         
         // Inclinação do fundo
-        backLayer.transform = CGAffineTransform(rotationAngle: -2.9)
+        backLayer.transform = CGAffineTransform(rotationAngle: -3.0)
         
         container.addSubview(backLayer)
         
@@ -65,7 +135,6 @@ class QuestionView:UIView {
             backLayer.heightAnchor.constraint(equalToConstant: 164)
         ])
         
-        // Card branco
         let card = UIView()
         card.backgroundColor = .white
         card.layer.cornerRadius = 30
@@ -76,13 +145,36 @@ class QuestionView:UIView {
         card.translatesAutoresizingMaskIntoConstraints = false
         
         container.addSubview(card)
-        card.transform = CGAffineTransform(rotationAngle: -3.05)
+        // Fix: Use positive angle to avoid upside down
+        card.transform = CGAffineTransform(rotationAngle: 0)
         
         NSLayoutConstraint.activate([
             card.centerXAnchor.constraint(equalTo: container.centerXAnchor),
             card.centerYAnchor.constraint(equalTo: container.centerYAnchor),
             card.widthAnchor.constraint(equalToConstant: 320),
             card.heightAnchor.constraint(equalToConstant: 170)
+        ])
+        
+        let cardLabel = UILabel()
+        cardLabel.translatesAutoresizingMaskIntoConstraints = false
+        cardLabel.text = "Texto do Card"
+        cardLabel.textColor = .black
+        cardLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
+        cardLabel.textAlignment = .center
+        cardLabel.numberOfLines = 0
+        if let customFont = UIFont(name: "Bahiana", size: 50) {
+            cardLabel.font = customFont
+        } else {
+            cardLabel.font = UIFont.systemFont(ofSize: 50, weight: .bold)
+        }
+        
+        card.addSubview(cardLabel)
+        
+        NSLayoutConstraint.activate([
+            cardLabel.centerXAnchor.constraint(equalTo: card.centerXAnchor),
+            cardLabel.centerYAnchor.constraint(equalTo: card.centerYAnchor),
+            cardLabel.leadingAnchor.constraint(equalTo: card.leadingAnchor, constant: 16),
+            cardLabel.trailingAnchor.constraint(equalTo: card.trailingAnchor, constant: -16)
         ])
         
         return container

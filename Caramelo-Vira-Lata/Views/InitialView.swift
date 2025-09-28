@@ -150,4 +150,4 @@ class InitialView: UIView {
 #Preview {
        let viewController = InitialViewController()
        return viewController
-   }
+}
