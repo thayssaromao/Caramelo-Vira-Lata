@@ -7,7 +7,34 @@
 
 import UIKit
 
+class InitialViewController: UIViewController {
+    private let initialView = InitialView()
+
+    override func loadView() {
+//        super.loadView()
+        self.view = initialView
+    }
+    
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        initialView.onButtonTap = navigateToOtherView
+    }
+    
+   func navigateToOtherView() {
+        print("NAVEGOU COM PUSH")
+        let questionVC = QuestionViewController()
+
+        self.navigationController?.pushViewController(questionVC, animated: true)
+    }
+
+
+}
+
+
 class InitialView: UIView {
+    
+    var onButtonTap: () -> Void = {}
+    
     
     lazy var label: UILabel = {
         let label = UILabel()
@@ -70,10 +97,16 @@ class InitialView: UIView {
         button.layer.shadowOffset = CGSize(width: 0, height: 4)
         
         
-//        button.addTarget(self, action: #selector(didPressCustomButton), for: .touchUpInside)
+        button.addTarget(self, action: #selector(didPressButton), for: .touchUpInside)
         
         return button
     }()
+    
+    @objc
+    private func didPressButton(){
+        print("bora pressionado")
+        onButtonTap()
+    }
     
     //MARK: INITIALIZERS
     override init(frame: CGRect){
@@ -90,10 +123,10 @@ class InitialView: UIView {
     
     //MARK: SETUP
     private func addSub(){
-        addSubview(customButton)
-        addSubview(label)
         addSubview(bg)
         addSubview(spiral)
+        addSubview(label)
+        addSubview(customButton)
     }
 
     private func setupConstraints(){
@@ -114,7 +147,7 @@ class InitialView: UIView {
     }
 }
 
-#Preview {
-       let viewController = InitialViewController()
-       return viewController
-   }
+//#Preview {
+//       let viewController = InitialViewController()
+//       return viewController
+//   }
