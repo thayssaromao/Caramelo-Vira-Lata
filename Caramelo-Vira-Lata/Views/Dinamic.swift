@@ -67,7 +67,7 @@ class DinamicViewController: UIViewController {
             navigationController?.pushViewController(nextVC, animated: true)
         } else {
             // Se não, vai para a tela de resultados
-            let resultsVC = ResultsViewController() // Tela de finalização
+            let resultsVC = ResultViewController() // Tela de finalização
             navigationController?.pushViewController(resultsVC, animated: true)
         }
     }
@@ -266,26 +266,26 @@ class DinamicView: UIView {
    }
 
 
-class ResultsViewController: UIViewController {
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        view.backgroundColor = .systemTeal
-        
-        let label = UILabel()
-        label.text = "FIM DO QUIZ! 🎉"
-        label.font = UIFont(name: "Bahiana", size: 80)
-        label.textColor = .white
-        label.textAlignment = .center
-        label.translatesAutoresizingMaskIntoConstraints = false
-        
-        view.addSubview(label)
-        
-        NSLayoutConstraint.activate([
-            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-    }
-}
+//class ResultsViewController: UIViewController {
+//    override func viewDidLoad() {
+//        super.viewDidLoad()
+//        view.backgroundColor = .systemTeal
+//        
+//        let label = UILabel()
+//        label.text = "FIM DO QUIZ! 🎉"
+//        label.font = UIFont(name: "Bahiana", size: 80)
+//        label.textColor = .white
+//        label.textAlignment = .center
+//        label.translatesAutoresizingMaskIntoConstraints = false
+//        
+//        view.addSubview(label)
+//        
+//        NSLayoutConstraint.activate([
+//            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+//            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+//        ])
+//    }
+//}
 
 // Para usar no Canvas de Preview do Xcode
 #Preview {
