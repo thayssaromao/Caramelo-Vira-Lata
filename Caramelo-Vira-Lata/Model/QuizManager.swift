@@ -120,7 +120,6 @@ struct QuizManager {
         )
     ]
 }
-
 class QuizResultManager {
     private let selectedOptionIndices: [Int]
 
@@ -139,7 +138,7 @@ class QuizResultManager {
             title: "VIRA LATA NEGUINHO\n(O SAMBISTA DA RODA)",
             imageName: "Neguinho",
             description: "Você é leal à sua comunidade e vive com paixão. Enraizado na cultura e na rotina, seu coração bate no ritmo da bateria.",
-            infoText: "Assim como o vira-lata Neguinho, você é parte da comunidade. Valoriza as conexões sociais e a alegria de viver, transformando todo dia em um um grande desfile."
+            infoText: "Assim como o vira-lata Neguinho, você é parte da comunidade. Valoriza as conexões sociais e a alegria de viver, transformando todo dia em um grande desfile."
         ),
         "Chico": QuizResult(
             title: "VIRA LATA CHICO\n(O INTELECTUAL/ATIVISTA)",
@@ -147,33 +146,25 @@ class QuizResultManager {
             description: "Sua vida é dedicada a uma causa, seja ela o conhecimento ou a justiça. Você é engajado, curioso e inspira as pessoas a lutar por um mundo melhor.",
             infoText: "Você é um cão de causas. Seja no campus ou na manifestação, sua presença é um lembrete de que o aprendizado e a luta por direitos são essenciais para a sociedade."
         ),
-        "Frajola": QuizResult(
-            title: "VIRA LATA FRAJOLA\n(O UNIVERSITÁRIO)",
-            imageName: "Frajola", // ⚠️ Crie este asset
-            description: "Seu lar é o campus! Você é um estudante honorário, protegido por projetos de extensão e mais interessado em conhecimento do que em ossos. Sua presença acalma e inspira.",
-            infoText: "Frajola representa o amor à instituição. Você é um espírito livre, mas adora a segurança da comunidade acadêmica, onde se sente valorizado e amado."
-        ),
-        // ⭐️ NOVO PERFIL: Coitadolandia (Resultado de baixo engajamento ou empate)
         "Coitadolandia": QuizResult(
             title: "VIRA LATA COITADOLANDIA\n(O INDEFINIDO)",
-            imageName: "Coitadolandia", // ⚠️ Crie este asset
+            imageName: "Coitadolandia",
             description: "Hmm, parece que você ainda está se encontrando. Suas respostas ficaram divididas demais! Tente de novo e descubra sua verdadeira vocação vira-lata!",
-            infoText: "Você é um mistério, um pouco de tudo e nada ao mesmo tempo. A vida na Coitadolandia é temporária; encontre seu propósito e volte para o quiz!"
+            infoText: "Você é um mistério, um pouco de tudo e nada ao mesmo tempo. A vida na Coitadolandia é temporária. Encontre seu propósito e volte para o quiz!"
         )
     ]
 
     private func calculateScores() -> [String: Int] {
-        var scores: [String: Int] = ["Caramelo": 0, "Neguinho": 0, "Chico": 0, "Frajola": 0]
+        var scores: [String: Int] = ["Caramelo": 0, "Neguinho": 0, "Chico": 0]
 
         for index in selectedOptionIndices {
             switch index {
-            case 0, 3:
-                scores["Caramelo"]! += 1
-            case 1, 4:
-                scores["Neguinho"]! += 1
-            case 2, 5:
-                scores["Chico"]! += 1
-            case 5: scores["Frajola"]! += 1 // Institucional/Acadêmico
+            case 0, 3: // Caramelo
+                scores["Caramelo", default: 0] += 1
+            case 1, 4: // Neguinho
+                scores["Neguinho", default: 0] += 1
+            case 2,5: // Chico
+                scores["Chico", default: 0] += 1
             default:
                 break
             }
@@ -183,27 +174,15 @@ class QuizResultManager {
 
     func getResult() -> QuizResult {
         let scores = calculateScores()
-        
-        // Encontra o perfil com a maior pontuação (excluindo Coitadolandia que é um resultado especial)
-        let bestScore = scores.values.max() ?? 0
-        let winningProfiles = scores.filter { $0.value == bestScore }
-        
-        // CRITÉRIO 1: Coitadolandia (Empate ou Engajamento muito baixo)
-        if bestScore <= 1 || winningProfiles.count > 1 {
-             return profiles["Coitadolandia"]!
+        let maxScore = scores.values.max() ?? 0
+        let winners = scores.filter { $0.value == maxScore }
+
+        // Se houver empate ou pontuação muito baixa, retorna Coitadolandia
+        if winners.count > 1 || maxScore <= 1 {
+            return profiles["Coitadolandia"]!
         }
-        
-        // CRITÉRIO 2: Frajola vs. Chico
-        if winningProfiles.keys.contains("Chico") || winningProfiles.keys.contains("Frajola") {
-            if (scores["Frajola"] ?? 0) > (scores["Chico"] ?? 0) {
-                return profiles["Frajola"]!
-            }
-            // Se Chico/Frajola for o vencedor, mas Chico for maior ou igual, retorna Chico
-            return profiles["Chico"]!
-        }
-        
-        // CRITÉRIO 3: Caramelo ou Neguinho
-        let winningProfileName = winningProfiles.keys.first ?? "Caramelo"
-        return profiles[winningProfileName]!
+
+        let winnerName = winners.keys.first!
+        return profiles[winnerName]!
     }
 }

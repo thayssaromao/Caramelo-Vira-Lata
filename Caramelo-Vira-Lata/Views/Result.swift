@@ -47,17 +47,22 @@ class ResultViewController: UIViewController {
     }
     
     private func presentInfoSheet() {
-        let infoVC = InfoSheetViewController()
-        infoVC.configure(with: finalResult.infoText)
-        
-        if let sheet = infoVC.sheetPresentationController {
-            sheet.detents = [.medium(), .large()]
-            sheet.prefersGrabberVisible = false
-            sheet.preferredCornerRadius = 30
+            let infoVC = InfoSheetViewController()
+            
+            // ⭐️ ALTERAÇÃO AQUI: Passar a descrição e o infoText
+            infoVC.configure(
+                withDescription: finalResult.description,
+                infoText: finalResult.infoText
+            )
+            
+            if let sheet = infoVC.sheetPresentationController {
+                sheet.detents = [.medium(), .large()]
+                sheet.prefersGrabberVisible = false
+                sheet.preferredCornerRadius = 30
+            }
+            
+            present(infoVC, animated: true, completion: nil)
         }
-        
-        present(infoVC, animated: true, completion: nil)
-    }
 }
 
 // MARK: - Result View
@@ -188,7 +193,7 @@ class InfoSheetViewController: UIViewController {
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "SAIBA MAIS"
+        label.text = "OBAAAA!!"
         label.font = UIFont(name: "Bahiana", size: 50) ?? UIFont.boldSystemFont(ofSize: 50)
         label.textColor = .label
         label.textAlignment = .center
@@ -198,16 +203,27 @@ class InfoSheetViewController: UIViewController {
     private let descriptionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont.systemFont(ofSize: 18)
-        label.textColor = .secondaryLabel
-        label.textAlignment = .center
+        label.font = UIFont.systemFont(ofSize: 20)
+        label.textColor = .black
+        label.textAlignment = .left
         label.numberOfLines = 0
         return label
     }()
     
-    func configure(with description: String) {
-        descriptionLabel.text = description
-    }
+    private let infoLabel: UILabel = { // <- texto explicativo
+            let label = UILabel()
+            label.translatesAutoresizingMaskIntoConstraints = false
+            label.font = UIFont.systemFont(ofSize: 20)
+            label.textColor = .black
+            label.textAlignment = .left
+            label.numberOfLines = 0
+            return label
+        }()
+    
+    func configure(withDescription description: String, infoText: String) {
+            descriptionLabel.text = description
+            infoLabel.text = infoText // <- Atribui o novo texto à infoLabel
+        }
 //
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -257,6 +273,7 @@ class InfoSheetViewController: UIViewController {
         view.addSubview(closeButton)
         view.addSubview(titleLabel)
         view.addSubview(descriptionLabel)
+        view.addSubview(infoLabel)
         
         NSLayoutConstraint.activate([
             grabberView.topAnchor.constraint(equalTo: view.topAnchor, constant: 8),
@@ -276,6 +293,11 @@ class InfoSheetViewController: UIViewController {
             descriptionLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 16),
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            infoLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
+                        infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+                        infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+                        // Adicione uma margem inferior se desejar que o conteúdo se ajuste corretamente
+                        infoLabel.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
 }
