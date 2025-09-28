@@ -136,19 +136,19 @@ class QuizResultManager {
         ),
         "Neguinho": QuizResult(
             title: "VIRA LATA NEGUINHO\n(O SAMBISTA DA RODA)",
-            imageName: "Neguinho",
+            imageName: "neguinho",
             description: "Você é leal à sua comunidade e vive com paixão. Enraizado na cultura e na rotina, seu coração bate no ritmo da bateria.",
             infoText: "Assim como o vira-lata Neguinho, você é parte da comunidade. Valoriza as conexões sociais e a alegria de viver, transformando todo dia em um grande desfile."
         ),
         "Chico": QuizResult(
             title: "VIRA LATA CHICO\n(O INTELECTUAL/ATIVISTA)",
-            imageName: "caramelo2",
+            imageName: "chico",
             description: "Sua vida é dedicada a uma causa, seja ela o conhecimento ou a justiça. Você é engajado, curioso e inspira as pessoas a lutar por um mundo melhor.",
             infoText: "Você é um cão de causas. Seja no campus ou na manifestação, sua presença é um lembrete de que o aprendizado e a luta por direitos são essenciais para a sociedade."
         ),
         "Coitadolandia": QuizResult(
             title: "VIRA LATA COITADOLANDIA\n(O INDEFINIDO)",
-            imageName: "Coitadolandia",
+            imageName: "coitadinho",
             description: "Hmm, parece que você ainda está se encontrando. Suas respostas ficaram divididas demais! Tente de novo e descubra sua verdadeira vocação vira-lata!",
             infoText: "Você é um mistério, um pouco de tudo e nada ao mesmo tempo. A vida na Coitadolandia é temporária. Encontre seu propósito e volte para o quiz!"
         )

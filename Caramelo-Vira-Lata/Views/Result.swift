@@ -318,7 +318,7 @@ class InfoSheetViewController: UIViewController {
 }
 
 #Preview {
-    let viewController = ResultViewController(selectedOptionIndices: [0, 1, 2])
+    let viewController = ResultViewController(selectedOptionIndices: [0, 5, 2])
     viewController.loadViewIfNeeded()
     return viewController
 }
