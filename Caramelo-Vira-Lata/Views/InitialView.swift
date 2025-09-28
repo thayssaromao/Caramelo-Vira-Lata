@@ -147,7 +147,7 @@ class InitialView: UIView {
     }
 }
 
-//#Preview {
-//       let viewController = InitialViewController()
-//       return viewController
-//   }
+#Preview {
+       let viewController = InitialViewController()
+       return viewController
+   }

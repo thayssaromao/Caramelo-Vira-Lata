@@ -5,7 +5,7 @@
 //  Created by Thayssa Romão on 28/09/25.
 //
 
-import SwiftUI
+import UIKit
 
 class QuestionViewController: UIViewController {
     private let questionView = QuestionView()
