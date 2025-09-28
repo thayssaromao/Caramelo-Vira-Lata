@@ -12,51 +12,6 @@ struct Question {
     let options: [String]
 }
 
-struct QuizManager {
-    static let questions: [Question] = [
-        Question(
-            text: "PERGUNTA 1",
-            options: ["CORRO ATRAS", "LEVO A SERIO", "KIKI BLUBLU", "ABLU ABLE","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "PERGUNTA 2",
-            options: ["OPÇÃO A", "OPÇÃO B", "OPÇÃO C", "OPÇÃO D","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "PERGUNTA 3",
-            options: ["OPÇÃO A", "OPÇÃO B", "OPÇÃO C", "OPÇÃO D","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "PERGUNTA 4",
-            options: ["OPÇÃO A", "OPÇÃO B", "OPÇÃO C", "OPÇÃO D","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "PERGUNTA 5",
-            options: ["OPÇÃO A", "OPÇÃO B", "OPÇÃO C", "OPÇÃO D","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "PERGUNTA 6",
-            options: ["OPÇÃO A", "OPÇÃO B", "OPÇÃO C", "OPÇÃO D","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "PERGUNTA 7",
-            options: ["OPÇÃO A", "OPÇÃO B", "OPÇÃO C", "OPÇÃO D","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "PERGUNTA 8",
-            options: ["OPÇÃO A", "OPÇÃO B", "OPÇÃO C", "OPÇÃO D","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "PERGUNTA 9",
-            options: ["OPÇÃO A", "OPÇÃO B", "OPÇÃO C", "OPÇÃO D","OPÇÃO D","OPÇÃO D"]
-        ),
-        Question(
-            text: "ÚLTIMA PERGUNTA",
-            options: ["FINAL 1", "FINAL 2", "FINAL 3", "FINAL 4","OPÇÃO D","OPÇÃO D"]
-        )
-    ]
-}
-
 // Mantemos o DinamicViewController como está, ele apenas carrega a DinamicView
 class DinamicViewController: UIViewController {
     
@@ -291,8 +246,9 @@ class DinamicView: UIView {
                for case let button as UIButton in horizontalStack.arrangedSubviews {
                    if button == sender {
                        // Botão selecionado fica cinza
-                       button.backgroundColor = UIColor(red: 0.486, green: 0.71, blue: 0.094, alpha: 1)
-                       button.setTitleColor(UIColor.white, for: .normal)
+//                       button.backgroundColor = UIColor(red: 0.486, green: 0.71, blue: 0.094, alpha: 1)
+//                       button.setTitleColor(UIColor.white, for: .normal)
+                       button.backgroundColor = UIColor(red: 0.48, green: 0.941, blue: 0.094, alpha: 1)
                        
                    } else {
                        // Outros ficam transparentes
@@ -309,16 +265,7 @@ class DinamicView: UIView {
        }
    }
 
-    
-//    private func disableAllOptions() {
-//        for hStack in optionsStackView.arrangedSubviews {
-//            guard let horizontalStack = hStack as? UIStackView else { continue }
-//            
-//            for case let button as UIButton in horizontalStack.arrangedSubviews {
-//                button.isEnabled = false
-//            }
-//        }
-//    }
+
 class ResultsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
