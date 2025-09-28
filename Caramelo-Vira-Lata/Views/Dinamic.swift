@@ -7,24 +7,29 @@
 import UIKit
 // MARK: - 1. Modelo de Dados para o Quiz
 
+// Deve ser a mesma struct usada no QuizManager.swift
 struct Question {
     let text: String
     let options: [String]
 }
 
-// Mantemos o DinamicViewController como está, ele apenas carrega a DinamicView
+// MARK: - Dinamic View Controller (Lógica de Navegação e Coleta)
+
 class DinamicViewController: UIViewController {
     
     private let dinamicView = DinamicView()
     
-    // Novas propriedades para gerenciar o estado
+    // Propriedades dinâmicas
     private var questions: [Question]
     private var questionIndex: Int
-    
-    // Inicializador customizado para passar os dados do quiz
-    init(questionIndex: Int, questions: [Question]) {
+    // Array para rastrear as respostas (índices das opções)
+    private var selectedOptionIndices: [Int]
+
+    // ⭐️ Inicializador com todas as propriedades de estado do quiz
+    init(questionIndex: Int, questions: [Question], selectedOptionIndices: [Int]) {
         self.questionIndex = questionIndex
         self.questions = questions
+        self.selectedOptionIndices = selectedOptionIndices // Armazena as respostas passadas
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -39,57 +44,67 @@ class DinamicViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        // Configura a view com a pergunta correta
         let currentQuestion = questions[questionIndex]
         dinamicView.configure(
             question: currentQuestion.text,
             options: currentQuestion.options
         )
         
-        // Atualiza a barra de progresso dinamicamente
         let progress = Float(questionIndex + 1) / Float(questions.count)
         dinamicView.progressBar.setProgress(progress, animated: true)
         
-        // Define a ação a ser tomada quando uma opção for selecionada
-        dinamicView.onOptionSelected = { [weak self] selectedText in
-            print("Pergunta \(self?.questionIndex ?? 0): Opção selecionada: \(selectedText)")
-            self?.goToNextQuestion()
+        // ⭐️ onOptionSelected agora recebe o índice da opção
+        dinamicView.onOptionSelected = { [weak self] selectedText, selectedIndex in
+            print("Pergunta \(self?.questionIndex ?? 0): Opção selecionada: \(selectedText) (Índice: \(selectedIndex))")
+            self?.goToNextQuestion(selectedIndex: selectedIndex)
         }
     }
     
-    private func goToNextQuestion() {
+    private func goToNextQuestion(selectedIndex: Int) {
+        // 1. Armazena a resposta atual
+        var updatedIndices = selectedOptionIndices
+        updatedIndices.append(selectedIndex) // Adiciona a resposta atual
+        
         let nextIndex = questionIndex + 1
         
         // Verifica se ainda há perguntas no quiz
         if nextIndex < questions.count {
-            // Se houver, cria e apresenta a próxima tela de pergunta
-            let nextVC = DinamicViewController(questionIndex: nextIndex, questions: questions)
+            // Se houver, navega para a próxima TELA DE PERGUNTA (QuestionViewController)
+            let nextVC = QuestionViewController(
+                questionIndex: nextIndex,
+                questions: questions,
+                selectedOptionIndices: updatedIndices // ⭐️ Passa o array ATUALIZADO
+            )
+            // Usa PUSH para manter o histórico de navegação
             navigationController?.pushViewController(nextVC, animated: true)
         } else {
             // Se não, vai para a tela de resultados
-            let resultsVC = ResultViewController() // Tela de finalização
+            // ⭐️ Passa o array ATUALIZADO para o ResultViewController
+            let resultsVC = ResultViewController(selectedOptionIndices: updatedIndices)
             navigationController?.pushViewController(resultsVC, animated: true)
         }
     }
 }
 
+// MARK: - Dinamic View (Layout e Botões)
+
 class DinamicView: UIView {
     
-    // Propriedade para notificar o ViewController quando uma opção for selecionada
-    var onOptionSelected: ((String) -> Void)?
-    
+    // ⭐️ onOptionSelected retorna o texto E o índice da opção (Int)
+    var onOptionSelected: ((String, Int) -> Void)?
+
     // MARK: - Componentes de UI
     
-    lazy var questionLabel: UILabel = { // Renomeado para maior clareza
+    lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "PERGUNTA 1" // Este texto será configurado dinamicamente
-        label.numberOfLines = 2
+        label.text = "PERGUNTA 1"
+        label.numberOfLines = 3
         label.textColor = .white
-        if let customFont = UIFont(name: "Bahiana", size: 70) {
+        if let customFont = UIFont(name: "Bahiana", size: 55) {
             label.font = customFont
         } else {
-            label.font = UIFont.systemFont(ofSize: 70, weight: .bold)
+            label.font = UIFont.systemFont(ofSize: 55, weight: .bold)
         }
         label.textAlignment = .center
         return label
@@ -99,27 +114,26 @@ class DinamicView: UIView {
         let progressView = UIProgressView()
         progressView.translatesAutoresizingMaskIntoConstraints = false
         progressView.progressTintColor = UIColor(red: 0.529, green: 0.941, blue: 0.208, alpha: 1) // Verde claro
-        progressView.trackTintColor = UIColor.white.withAlphaComponent(0.3) // Fundo branco transparente
-        progressView.setProgress(0.3, animated: true) // Exemplo de progresso
+        progressView.trackTintColor = UIColor.white.withAlphaComponent(0.3)
+        progressView.setProgress(0.3, animated: true)
         progressView.layer.cornerRadius = 6
-        progressView.clipsToBounds = true // Essencial para o cornerRadius funcionar no track
+        progressView.clipsToBounds = true
         return progressView
     }()
     
-    // MARK: - Novo: StackView para organizar os botões
     lazy var optionsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
-        stackView.axis = .vertical // Stack principal para as duas linhas de botões
+        stackView.axis = .vertical
         stackView.distribution = .fillEqually
-        stackView.spacing = 20 // Espaçamento entre as linhas
+        stackView.spacing = 20
         return stackView
     }()
     
     lazy var bg: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "bgDinamic") // Certifique-se que esta imagem existe
+        imageView.image = UIImage(named: "bgDinamic")
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
@@ -149,26 +163,26 @@ class DinamicView: UIView {
     // MARK: - Setup
     private func addSub() {
         addSubview(bg)
-        addSubview(questionLabel) // Usando o novo nome
+        addSubview(questionLabel)
         addSubview(progressBar)
-        addSubview(optionsStackView) // Adiciona a stack view
+        addSubview(optionsStackView)
     }
     
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             questionLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            questionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 30), // Ajuste para o topo
+            questionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 0),
             questionLabel.widthAnchor.constraint(equalToConstant: 290),
             
             optionsStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            optionsStackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 50), // Centraliza aproximadamente na vertical
+            optionsStackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 50),
             optionsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             optionsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             
             progressBar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 40),
             progressBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
             progressBar.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -40),
-            progressBar.heightAnchor.constraint(equalToConstant: 12), // Um pouco mais alta para ser visível como na imagem
+            progressBar.heightAnchor.constraint(equalToConstant: 12),
             
             bg.leadingAnchor.constraint(equalTo: leadingAnchor),
             bg.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -184,30 +198,32 @@ class DinamicView: UIView {
     }
     
     private func createOptionButton(title: String) -> UIButton {
-        let button = UIButton(type: .system) // Use .system para ter estados de highlight
+        let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
         
         button.setTitle(title, for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         
-        if let customFont = UIFont(name: "Bahiana", size: 42) { // Ajuste o tamanho da fonte se necessário
+        // ⭐️ Permite até 3 linhas e centraliza o texto
+        button.titleLabel?.numberOfLines = 3
+        button.titleLabel?.textAlignment = .center
+        
+        if let customFont = UIFont(name: "Bahiana", size: 24) {
             button.titleLabel?.font = customFont
         } else {
             button.titleLabel?.font = UIFont.systemFont(ofSize: 42, weight: .bold)
         }
         
-        button.backgroundColor = UIColor(red: 0.941, green: 0.784, blue: 0.043, alpha: 1) // Amarelo
-        button.layer.cornerRadius = 25 // Raio dos cantos
+        button.backgroundColor = UIColor(red: 0.941, green: 0.784, blue: 0.043, alpha: 1)
+        button.layer.cornerRadius = 25
         button.clipsToBounds = true
         
-        // Adicionar sombra (opcional, mas comum para botões)
         button.layer.shadowColor = UIColor.black.withAlphaComponent(0.25).cgColor
         button.layer.shadowOffset = CGSize(width: 0, height: 4)
         button.layer.shadowOpacity = 1
         button.layer.shadowRadius = 4
         
-        // Define uma altura fixa para os botões
-        button.heightAnchor.constraint(equalToConstant: 80).isActive = true // Ajuste a altura conforme necessário
+        button.heightAnchor.constraint(equalToConstant: 80).isActive = true
         
         button.addTarget(self, action: #selector(optionButtonTapped(_:)), for: .touchUpInside)
         
@@ -215,82 +231,60 @@ class DinamicView: UIView {
     }
     
     private func addOptionButtons(with options: [String]) {
-        // Limpa quaisquer botões existentes antes de adicionar novos
         optionsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
-        
-        // Assumimos que sempre teremos um número par de opções para 2 colunas
-        // Se o número de opções for ímpar, a última linha terá apenas 1 botão.
         
         var currentHStack: UIStackView?
         
         for (index, optionText) in options.enumerated() {
-            if index % 2 == 0 { // Inicia uma nova linha (Horizontal Stack)
+            if index % 2 == 0 {
                 currentHStack = UIStackView()
                 currentHStack!.axis = .horizontal
                 currentHStack!.distribution = .fillEqually
-                currentHStack!.spacing = 20 // Espaçamento entre os botões na mesma linha
+                currentHStack!.spacing = 20
                 optionsStackView.addArrangedSubview(currentHStack!)
             }
             
             let button = createOptionButton(title: optionText)
+            button.tag = index // ⭐️ Armazena o índice da opção na tag do botão
             currentHStack?.addArrangedSubview(button)
         }
     }
     
     @objc private func optionButtonTapped(_ sender: UIButton) {
            
-           
            for hStack in optionsStackView.arrangedSubviews {
                guard let horizontalStack = hStack as? UIStackView else { continue }
                
                for case let button as UIButton in horizontalStack.arrangedSubviews {
                    if button == sender {
-                       // Botão selecionado fica cinza
-//                       button.backgroundColor = UIColor(red: 0.486, green: 0.71, blue: 0.094, alpha: 1)
-//                       button.setTitleColor(UIColor.white, for: .normal)
                        button.backgroundColor = UIColor(red: 0.48, green: 0.941, blue: 0.094, alpha: 1)
                        
                    } else {
-                       // Outros ficam transparentes
                        button.alpha = 0.5
                    }
                }
            }
            
-           DispatchQueue.main.asyncAfter(deadline: .now() + 0.5) { // Aumentei um pouco o delay
+           DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                if let selectedTitle = sender.titleLabel?.text {
-                   self.onOptionSelected?(selectedTitle)
+                   // ⭐️ Retorna o índice (tag) do botão
+                   self.onOptionSelected?(selectedTitle, sender.tag)
                }
            }
        }
    }
 
 
-//class ResultsViewController: UIViewController {
-//    override func viewDidLoad() {
-//        super.viewDidLoad()
-//        view.backgroundColor = .systemTeal
-//        
-//        let label = UILabel()
-//        label.text = "FIM DO QUIZ! 🎉"
-//        label.font = UIFont(name: "Bahiana", size: 80)
-//        label.textColor = .white
-//        label.textAlignment = .center
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        
-//        view.addSubview(label)
-//        
-//        NSLayoutConstraint.activate([
-//            label.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-//            label.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-//        ])
-//    }
-//}
-
 // Para usar no Canvas de Preview do Xcode
 #Preview {
-    // Para o preview funcionar, iniciamos com a primeira pergunta
-    let firstQuestionVC = DinamicViewController(questionIndex: 0, questions: QuizManager.questions)
+    // É necessário ter o QuizManager e a QuestionViewController para este Preview
+    let mockQuestions = [
+        Question(text: "SUA PRINCIPAL MISSAO MATINAL É?", options: ["CAÇAR O PÃO", "ACOMPANHAR ÔNIBUS", "MARCAR PRESENÇA NA AULA", "ESPERAR INSS", "PASSAR CATRACA", "PROCURAR BARRACÃO"]),
+        // ... (Adicione mais Questions se necessário para evitar crash)
+    ]
+    
+    // Inicia com um array vazio de respostas
+    let firstQuestionVC = DinamicViewController(questionIndex: 0, questions: mockQuestions, selectedOptionIndices: [])
     // Para ter a navegação no preview, o ideal é embarcá-lo em um Navigation Controller
     return UINavigationController(rootViewController: firstQuestionVC)
 }

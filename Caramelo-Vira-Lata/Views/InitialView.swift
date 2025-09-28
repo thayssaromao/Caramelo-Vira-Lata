@@ -11,7 +11,6 @@ class InitialViewController: UIViewController {
     private let initialView = InitialView()
 
     override func loadView() {
-//        super.loadView()
         self.view = initialView
     }
     
@@ -20,15 +19,21 @@ class InitialViewController: UIViewController {
         initialView.onButtonTap = navigateToOtherView
     }
     
-   func navigateToOtherView() {
+    func navigateToOtherView() {
         print("NAVEGOU COM PUSH")
-        let questionVC = QuestionViewController()
+           
+        // ⭐️ CORREÇÃO: Passa o índice 0, todas as perguntas, e INICIA o array de respostas
+        let questionVC = QuestionViewController(
+            questionIndex: 0,
+            questions: QuizManager.questions,
+            selectedOptionIndices: []
+        )
 
         self.navigationController?.pushViewController(questionVC, animated: true)
     }
 
-
 }
+
 
 
 class InitialView: UIView {

@@ -10,10 +10,27 @@ import UIKit
 class QuestionViewController: UIViewController {
     private let questionView = QuestionView()
     private let progressBar = UIProgressView(progressViewStyle: .default)
-    private var hasAnimated = false   // <- controla execução única
+    private var hasAnimated = false
     
     private var cardOriginalTransform: CGAffineTransform = .identity
 
+    // PROPRIEDADES DINÂMICAS
+    private let questionIndex: Int
+    private let questions: [Question]
+    // ⭐️ Propriedade para rastrear as respostas
+    private let selectedOptionIndices: [Int]
+
+    // ⭐️ CORREÇÃO: Inicializador agora recebe o array de índices
+    init(questionIndex: Int, questions: [Question], selectedOptionIndices: [Int]) {
+        self.questionIndex = questionIndex
+        self.questions = questions
+        self.selectedOptionIndices = selectedOptionIndices // Armazena o array
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func loadView() {
         self.view = questionView
@@ -25,14 +42,21 @@ class QuestionViewController: UIViewController {
         cardOriginalTransform = questionView.cardContainer.transform
 
         // 2. Posicione o card FORA da tela ANTES dela aparecer
-                questionView.cardContainer.transform = cardOriginalTransform.translatedBy(x: 0, y: self.view.bounds.height)
-           
+        questionView.cardContainer.transform = cardOriginalTransform.translatedBy(x: 0, y: self.view.bounds.height)
+        
+        // Configura o TEXTO do card e o título da tela
+        let currentQuestion = questions[questionIndex]
+        questionView.configureCardText(with: currentQuestion.text)
+        questionView.label.text = "PERGUNTA \(questionIndex + 1)"
+        
+        // Configura o progresso inicial
+        let progress = Float(questionIndex + 1) / Float(questions.count)
+        progressBar.setProgress(progress, animated: false)
     }
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         
-        // Só roda uma vez
         if !hasAnimated {
             hasAnimated = true
             animateCard()
@@ -42,7 +66,6 @@ class QuestionViewController: UIViewController {
     
     private func setupProgressBar() {
         progressBar.translatesAutoresizingMaskIntoConstraints = false
-        progressBar.progress = 0
         progressBar.tintColor = UIColor(red: 0.263, green: 0.22, blue: 0.875, alpha: 1)
         progressBar.trackTintColor = UIColor.lightGray.withAlphaComponent(0.3)
         progressBar.layer.cornerRadius = 6
@@ -72,18 +95,14 @@ class QuestionViewController: UIViewController {
     }
     
     private func startLoading() {
-        let duration: TimeInterval = 5.0
+        let duration: TimeInterval = 2.5
 
-        // 1. ANIMAÇÃO VISUAL: Força a barra a animar ao longo de 5 segundos
-        // Nós definimos o valor final e mandamos a view animar essa mudança de layout.
-        self.progressBar.setProgress(1.0, animated: false) // Define o valor final
+        self.progressBar.setProgress(1.0, animated: false)
         UIView.animate(withDuration: duration, delay: 0.0, options: .curveLinear, animations: {
-            self.view.layoutIfNeeded() // Anima a mudança visual ao longo da duração
-        }, completion: nil) // O completion aqui não é mais usado para navegar
+            self.view.layoutIfNeeded()
+        }, completion: nil)
 
 
-        // 2. LÓGICA DE TEMPO: Garante a navegação após 5 segundos
-        // Isso cria um "timer" que executa o código no bloco após o tempo especificado.
         DispatchQueue.main.asyncAfter(deadline: .now() + duration) {
             self.goToNextScreen()
         }
@@ -91,14 +110,33 @@ class QuestionViewController: UIViewController {
     
     
     private func goToNextScreen() {
-        // Inicia o quiz na primeira pergunta (índice 0)
-        let firstQuestionVC = DinamicViewController(
-            questionIndex: 0,
-            questions: QuizManager.questions
+        // Navega para a TELA DE OPÇÕES (DinamicViewController)
+        let nextQuestionVC = DinamicViewController(
+            questionIndex: self.questionIndex,
+            questions: self.questions,
+            selectedOptionIndices: self.selectedOptionIndices // ⭐️ Passa o array de respostas
         )
-        self.navigationController?.pushViewController(firstQuestionVC, animated: true)
+        // Usa `setViewControllers` para substituir a QuestionViewController na pilha,
+        // garantindo que o botão "Voltar" na DinamicViewController não leve de volta para a QuestionViewController
+        let viewControllers = self.navigationController?.viewControllers.dropLast() ?? []
+        self.navigationController?.setViewControllers(viewControllers + [nextQuestionVC], animated: true)
     }
 }
+
+// ⭐️ NOVO: Extension para o método de configuração
+extension QuestionView {
+    func configureCardText(with text: String) {
+        // Encontra o UILabel dentro da hierarquia do cardContainer
+        if let card = cardContainer.subviews.compactMap({ $0 as? UIView }).first(where: { $0.backgroundColor == .white }),
+           let cardLabel = card.subviews.first(where: { $0 is UILabel }) as? UILabel {
+            cardLabel.text = text
+        }
+        
+        // A label principal de título será configurada no ViewController.
+        // self.label.text = "PERGUNTA \(questionIndex + 1)" // Removido daqui
+    }
+}
+
 
 class QuestionView:UIView {
     
@@ -108,7 +146,7 @@ class QuestionView:UIView {
         label.text = "PERGUNTA"
         label.numberOfLines = 2
         label.textColor = .white
-        if let customFont = UIFont(name: "Bahiana", size: 70) {
+        if let customFont = UIFont(name: "Bahiana", size: 60) {
             label.font = customFont
         } else {
             label.font = UIFont.systemFont(ofSize: 70, weight: .bold)
@@ -120,6 +158,7 @@ class QuestionView:UIView {
     
     lazy var cardContainer: UIView = {
         let container = UIView()
+        // ... (resto do código do cardContainer) ...
         container.translatesAutoresizingMaskIntoConstraints = false
         
         let backLayer = UIView()
@@ -165,11 +204,11 @@ class QuestionView:UIView {
         cardLabel.textColor = .black
         cardLabel.font = UIFont.systemFont(ofSize: 32, weight: .bold)
         cardLabel.textAlignment = .center
-        cardLabel.numberOfLines = 0
-        if let customFont = UIFont(name: "Bahiana", size: 50) {
+        cardLabel.numberOfLines = 3
+        if let customFont = UIFont(name: "Bahiana", size: 45) {
             cardLabel.font = customFont
         } else {
-            cardLabel.font = UIFont.systemFont(ofSize: 50, weight: .bold)
+            cardLabel.font = UIFont.systemFont(ofSize: 45, weight: .bold)
         }
         
         card.addSubview(cardLabel)
@@ -240,7 +279,18 @@ class QuestionView:UIView {
     }
 }
 
+// ⭐️ Corrigido o Preview para usar o inicializador dinâmico
 #Preview {
-       let viewController = QuestionViewController()
-       return viewController
-   }
+    // Para o preview funcionar, iniciamos com a primeira pergunta
+    let mockQuestions = [
+        Question(text: "SUA PRINCIPAL MISSAO MATINAL É?", options: ["CAÇAR O PÃO", "ACOMPANHAR ÔNIBUS", "MARCAR PRESENÇA NA AULA", "ESPERAR INSS", "PASSAR CATRACA", "PROCURAR BARRACÃO"]),
+        // Adicione mais Questions mockadas se necessário para evitar crash.
+    ]
+    
+    // Inicia com um array vazio de respostas
+    let firstQuestionVC = DinamicViewController(questionIndex: 0, questions: mockQuestions, selectedOptionIndices: [])
+    
+    // Para ter a navegação no preview, o ideal é embarcá-lo em um Navigation Controller
+    // ⭐️ CORREÇÃO: Remova o 'return' explícito
+    UINavigationController(rootViewController: firstQuestionVC)
+}
