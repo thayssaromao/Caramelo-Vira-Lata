@@ -91,8 +91,12 @@ class QuestionViewController: UIViewController {
     
     
     private func goToNextScreen() {
-        let nextVC = DinamicViewController()
-        self.navigationController?.pushViewController(nextVC, animated: true)
+        // Inicia o quiz na primeira pergunta (índice 0)
+        let firstQuestionVC = DinamicViewController(
+            questionIndex: 0,
+            questions: QuizManager.questions
+        )
+        self.navigationController?.pushViewController(firstQuestionVC, animated: true)
     }
 }
 
