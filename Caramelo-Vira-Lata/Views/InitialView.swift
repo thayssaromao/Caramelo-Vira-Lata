@@ -9,6 +9,49 @@ import UIKit
 
 class InitialView: UIView {
     
+    lazy var label: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "QUAL VIRA LATA É VOCÊ ??"
+        label.numberOfLines = 2
+        label.textColor = UIColor(red: 0.263, green: 0.22, blue: 0.875, alpha: 1)
+        if let customFont = UIFont(name: "Bahiana", size: 70) {
+            label.font = customFont
+        } else {
+            label.font = UIFont.systemFont(ofSize: 70, weight: .bold)
+        }
+        label.textAlignment = .center
+        return label
+    }()
+    
+    lazy var bg: UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "bgFull")
+        
+        
+        return imageView
+    }()
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        bg.frame = self.bounds
+        
+    }
+    override func didMoveToSuperview() {
+        super.didMoveToSuperview()
+        sendSubviewToBack(bg)
+    }
+    
+    // Auto layout, grids, variables, and unit scale are not yet supported
+    lazy var spiral : UIImageView = {
+        let spiralView = UIImageView()
+        spiralView.translatesAutoresizingMaskIntoConstraints = false
+        spiralView.image = UIImage(named: "spiral")
+        spiralView.alpha = 0.98
+        return spiralView
+    }()
+    
     lazy var customButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -48,16 +91,27 @@ class InitialView: UIView {
     //MARK: SETUP
     private func addSub(){
         addSubview(customButton)
+        addSubview(label)
+        addSubview(bg)
+        addSubview(spiral)
     }
 
-private func setupConstraints(){
-    NSLayoutConstraint.activate([
-        customButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-        customButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 724),
-        customButton.widthAnchor.constraint(equalToConstant: 209),
-        customButton.heightAnchor.constraint(equalToConstant: 74)
-    ])
-}
+    private func setupConstraints(){
+        NSLayoutConstraint.activate([
+            spiral.widthAnchor.constraint(equalToConstant: 390),
+            spiral.topAnchor.constraint(equalTo: topAnchor, constant: 240.46),
+            
+            bg.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            bg.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
+            label.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            label.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -260),
+            label.widthAnchor.constraint(equalToConstant: 290),
+            customButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            customButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 724),
+            customButton.widthAnchor.constraint(equalToConstant: 209),
+            customButton.heightAnchor.constraint(equalToConstant: 74)
+        ])
+    }
 }
 
 #Preview {
