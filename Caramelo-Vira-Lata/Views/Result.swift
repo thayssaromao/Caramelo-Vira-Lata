@@ -124,6 +124,7 @@ class ResultView: UIView {
         backgroundColor = .white
         addSubviews()
         setupConstraints()
+        startRotation()
     }
 
     required init?(coder: NSCoder) {
@@ -167,6 +168,20 @@ class ResultView: UIView {
             arrowButton.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
+    
+    private func startRotation() {
+            let rotation = CABasicAnimation(keyPath: "transform.rotation.z")
+            // O valor '2 * .pi' representa uma volta completa (360 graus)
+            rotation.toValue = NSNumber(value: Double.pi * 2)
+            // Duração de cada ciclo de rotação (em segundos)
+            rotation.duration = 10.0
+            // Número de vezes que a animação se repetirá (infinito)
+            rotation.repeatCount = .infinity
+            // Garante que o estado final (uma rotação completa) não volte ao inicial
+            rotation.isRemovedOnCompletion = false
+            
+            self.spiral.layer.add(rotation, forKey: "spinAnimation")
+        }
 }
 
 // MARK: - Info Sheet View Controller
