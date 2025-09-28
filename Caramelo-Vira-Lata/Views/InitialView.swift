@@ -84,6 +84,14 @@ class InitialView: UIView {
         return spiralView
     }()
     
+    lazy var doggy : UIImageView = {
+        let doggyView = UIImageView()
+        doggyView.translatesAutoresizingMaskIntoConstraints = false
+        doggyView.image = UIImage(named: "doggy")
+        doggyView.alpha = 0.98
+        return doggyView
+    }()
+    
     lazy var customButton: UIButton = {
         let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -120,6 +128,7 @@ class InitialView: UIView {
         
         addSub()
         setupConstraints()
+        startRotation()
     }
 
     required init?(coder: NSCoder) {
@@ -130,14 +139,31 @@ class InitialView: UIView {
     private func addSub(){
         addSubview(bg)
         addSubview(spiral)
+        addSubview(doggy)
         addSubview(label)
         addSubview(customButton)
     }
-
+    private func startRotation() {
+            let rotation = CABasicAnimation(keyPath: "transform.rotation.z")
+            // O valor '2 * .pi' representa uma volta completa (360 graus)
+            rotation.toValue = NSNumber(value: Double.pi * 2)
+            // Duração de cada ciclo de rotação (em segundos)
+            rotation.duration = 4.0
+            // Número de vezes que a animação se repetirá (infinito)
+            rotation.repeatCount = .infinity
+            // Garante que o estado final (uma rotação completa) não volte ao inicial
+            rotation.isRemovedOnCompletion = false
+            
+            self.doggy.layer.add(rotation, forKey: "spinAnimation")
+        }
+    
     private func setupConstraints(){
         NSLayoutConstraint.activate([
-            spiral.widthAnchor.constraint(equalToConstant: 390),
-            spiral.topAnchor.constraint(equalTo: topAnchor, constant: 240.46),
+            spiral.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            spiral.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30),
+            
+            doggy.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
+            doggy.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 30),
             
             bg.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
             bg.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
