@@ -22,6 +22,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let initialVC = InitialViewController()
 //        let initialVC = ResultViewController(selectedOptionIndices: [0, 1, 2])
 
+        //SoundManager.shared.playLoop(sound: .background)
         
         // 3. Crie um UINavigationController com sua tela inicial como a raiz
         let navigationController = UINavigationController(rootViewController: initialVC)

@@ -251,8 +251,31 @@ class DinamicView: UIView {
     }
     
     @objc private func optionButtonTapped(_ sender: UIButton) {
+        
+        let soundToPlay: Sound
+          
+          switch sender.tag {
+          case 1:
+              soundToPlay = .option1
+          case 2:
+              soundToPlay = .option2
+          case 3:
+              soundToPlay = .option3
+          case 4:
+              soundToPlay = .option4
+          case 5:
+              soundToPlay = .option5
+          case 6:
+              soundToPlay = .option6
+          default:
            
-           for hStack in optionsStackView.arrangedSubviews {
+              print("Tag de botão não reconhecida: \(sender.tag)")
+              soundToPlay = .option1
+          }
+        SoundManager.shared.play(sound: soundToPlay)
+
+        
+        for hStack in optionsStackView.arrangedSubviews {
                guard let horizontalStack = hStack as? UIStackView else { continue }
                
                for case let button as UIButton in horizontalStack.arrangedSubviews {

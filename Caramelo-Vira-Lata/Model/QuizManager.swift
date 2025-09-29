@@ -141,7 +141,7 @@ class QuizResultManager {
             infoText: "Assim como o vira-lata Neguinho, você é parte da comunidade. Valoriza as conexões sociais e a alegria de viver, transformando todo dia em um grande desfile."
         ),
         "Chico": QuizResult(
-            title: "VIRA LATA CHICO\n(O INTELECTUAL/ATIVISTA)",
+            title: "VIRA LATA FIAPO DE MANGA\n(O INTELECTUAL/ATIVISTA)",
             imageName: "chico",
             description: "Sua vida é dedicada a uma causa, seja ela o conhecimento ou a justiça. Você é engajado, curioso e inspira as pessoas a lutar por um mundo melhor.",
             infoText: "Você é um cão de causas. Seja no campus ou na manifestação, sua presença é um lembrete de que o aprendizado e a luta por direitos são essenciais para a sociedade."

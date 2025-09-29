@@ -10,6 +10,8 @@ import UIKit
 class InitialViewController: UIViewController {
     private let initialView = InitialView()
 
+    
+
     override func loadView() {
         self.view = initialView
     }
@@ -17,6 +19,8 @@ class InitialViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         initialView.onButtonTap = navigateToOtherView
+        SoundManager.shared.playLoop(sound: .background)
+        
     }
     
     func navigateToOtherView() {
@@ -118,7 +122,8 @@ class InitialView: UIView {
     @objc
     private func didPressButton(){
         print("bora pressionado")
-        onButtonTap()
+        onButtonTap() //SoundManager.shared.playLoop(sound: .option1)
+        SoundManager.shared.play(sound: .option1) 
     }
     
     //MARK: INITIALIZERS
