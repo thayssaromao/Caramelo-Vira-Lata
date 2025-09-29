@@ -4,7 +4,17 @@
 //
 //  Created by Thayssa Romão on 28/09/25.
 //
+struct QuizResult {
+    let title: String
+    let imageName: String
+    let description: String
+    let infoText: String
+}
 
+struct Question {
+    let text: String
+    let options: [String]
+}
 
 struct QuizManager {
     static let questions: [Question] = [
