@@ -1,10 +1,3 @@
-//
-//  QuestionViewController.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 28/09/25.
-//
-
 import UIKit
 
 class QuestionViewController: UIViewController {
@@ -14,17 +7,14 @@ class QuestionViewController: UIViewController {
     
     private var cardOriginalTransform: CGAffineTransform = .identity
 
-    // PROPRIEDADES DINÂMICAS
     private let questionIndex: Int
     private let questions: [Question]
-    // ⭐️ Propriedade para rastrear as respostas
     private let selectedOptionIndices: [Int]
 
-    // ⭐️ CORREÇÃO: Inicializador agora recebe o array de índices
     init(questionIndex: Int, questions: [Question], selectedOptionIndices: [Int]) {
         self.questionIndex = questionIndex
         self.questions = questions
-        self.selectedOptionIndices = selectedOptionIndices // Armazena o array
+        self.selectedOptionIndices = selectedOptionIndices
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -41,15 +31,12 @@ class QuestionViewController: UIViewController {
         setupProgressBar()
         cardOriginalTransform = questionView.cardContainer.transform
 
-        // 2. Posicione o card FORA da tela ANTES dela aparecer
         questionView.cardContainer.transform = cardOriginalTransform.translatedBy(x: 0, y: self.view.bounds.height)
         
-        // Configura o TEXTO do card e o título da tela
         let currentQuestion = questions[questionIndex]
         questionView.configureCardText(with: currentQuestion.text)
         questionView.label.text = "PERGUNTA \(questionIndex + 1)"
         
-        // Configura o progresso inicial
         let progress = Float(questionIndex + 1) / Float(questions.count)
         progressBar.setProgress(progress, animated: false)
     }
@@ -110,11 +97,10 @@ class QuestionViewController: UIViewController {
     
     
     private func goToNextScreen() {
-        // Navega para a TELA DE OPÇÕES (DinamicViewController)
         let nextQuestionVC = DinamicViewController(
             questionIndex: self.questionIndex,
             questions: self.questions,
-            selectedOptionIndices: self.selectedOptionIndices // ⭐️ Passa o array de respostas
+            selectedOptionIndices: self.selectedOptionIndices 
         )
         // Usa `setViewControllers` para substituir a QuestionViewController na pilha,
         // garantindo que o botão "Voltar" na DinamicViewController não leve de volta para a QuestionViewController
@@ -122,4 +108,3 @@ class QuestionViewController: UIViewController {
         self.navigationController?.setViewControllers(viewControllers + [nextQuestionVC], animated: true)
     }
 }
-

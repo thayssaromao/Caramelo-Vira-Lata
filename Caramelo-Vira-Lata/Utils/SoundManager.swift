@@ -1,10 +1,3 @@
-//
-//  SoundManager.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 28/09/25.
-//
-
 import AVFoundation
 
 enum Sound: String, CaseIterable {
@@ -16,7 +9,6 @@ enum Sound: String, CaseIterable {
     case option5
     case option6
 }
-
 
 class SoundManager {
     static let shared = SoundManager()
@@ -30,7 +22,7 @@ class SoundManager {
     }
     
     private func getAudioPlayer(sound: Sound) -> AVAudioPlayer? {
-        let extensions = ["mp3", "wav", "m4a"] // Tenta primeiro .mp3, depois .wav
+        let extensions = ["mp3", "wav", "m4a"]
         
         for ext in extensions {
             if let url = Bundle.main.url(forResource: sound.rawValue, withExtension: ext) {
@@ -90,11 +82,10 @@ class SoundManager {
             } else {
                 timer.invalidate()
                 audioPlayer.stop()
-                audioPlayer.volume = 1.0 // Reset para o valor padrão
+                audioPlayer.volume = 1.0
             }
         }
     }
     
-    //Vai ser um enum dos nomes dos seus arquivos de som (sem o .mp3)
-    
+ 
 }

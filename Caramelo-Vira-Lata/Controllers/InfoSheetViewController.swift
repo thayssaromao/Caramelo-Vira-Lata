@@ -1,12 +1,4 @@
-//
-//  InfoSheetViewController.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 28/09/25.
-//
-
 import UIKit
-
 
 class InfoSheetViewController: UIViewController {
     
@@ -47,7 +39,7 @@ class InfoSheetViewController: UIViewController {
         return label
     }()
     
-    private let infoLabel: UILabel = { // <- texto explicativo
+    private let infoLabel: UILabel = {
             let label = UILabel()
             label.translatesAutoresizingMaskIntoConstraints = false
             label.font = UIFont.systemFont(ofSize: 20)
@@ -59,9 +51,9 @@ class InfoSheetViewController: UIViewController {
     
     func configure(withDescription description: String, infoText: String) {
             descriptionLabel.text = description
-            infoLabel.text = infoText // <- Atribui o novo texto à infoLabel
+            infoLabel.text = infoText
         }
-//
+
     override func viewDidLoad() {
         super.viewDidLoad()
         view.backgroundColor = .white
@@ -70,7 +62,6 @@ class InfoSheetViewController: UIViewController {
     }
 
     @objc private func closeTapped() {
-        // Volta para a tela inicial substituindo a pilha do Navigation Controller
         let initialVC = InitialViewController()
         
         if let presenter = self.presentingViewController {
@@ -131,10 +122,9 @@ class InfoSheetViewController: UIViewController {
             descriptionLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
             descriptionLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
             infoLabel.topAnchor.constraint(equalTo: descriptionLabel.bottomAnchor, constant: 20),
-                        infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
-                        infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
-                        // Adicione uma margem inferior se desejar que o conteúdo se ajuste corretamente
-                        infoLabel.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 30),
+            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -30),
+            infoLabel.bottomAnchor.constraint(lessThanOrEqualTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -20)
         ])
     }
 }

@@ -1,10 +1,3 @@
-//
-//  InitialView.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 23/09/25.
-//
-
 import UIKit
 
 class InitialView: UIView {
@@ -46,7 +39,6 @@ class InitialView: UIView {
         sendSubviewToBack(bg)
     }
     
-    // Auto layout, grids, variables, and unit scale are not yet supported
     lazy var spiral : UIImageView = {
         let spiralView = UIImageView()
         spiralView.translatesAutoresizingMaskIntoConstraints = false
@@ -89,7 +81,7 @@ class InitialView: UIView {
     @objc
     private func didPressButton(){
         print("bora pressionado")
-        onButtonTap() //SoundManager.shared.playLoop(sound: .option1)
+        onButtonTap()
         SoundManager.shared.play(sound: .option1) 
     }
     
@@ -119,11 +111,8 @@ class InitialView: UIView {
             let rotation = CABasicAnimation(keyPath: "transform.rotation.z")
             // O valor '2 * .pi' representa uma volta completa (360 graus)
             rotation.toValue = NSNumber(value: Double.pi * 2)
-            // Duração de cada ciclo de rotação (em segundos)
             rotation.duration = 4.0
-            // Número de vezes que a animação se repetirá (infinito)
             rotation.repeatCount = .infinity
-            // Garante que o estado final (uma rotação completa) não volte ao inicial
             rotation.isRemovedOnCompletion = false
             
             self.doggy.layer.add(rotation, forKey: "spinAnimation")
@@ -148,9 +137,4 @@ class InitialView: UIView {
             customButton.heightAnchor.constraint(equalToConstant: 74)
         ])
     }
-}
-
-#Preview {
-       let viewController = InitialViewController()
-       return viewController
 }

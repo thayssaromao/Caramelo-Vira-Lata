@@ -1,9 +1,3 @@
-//
-//  Result.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 28/09/25.
-//
 import UIKit
 
 class ResultView: UIView {
@@ -112,20 +106,10 @@ class ResultView: UIView {
             let rotation = CABasicAnimation(keyPath: "transform.rotation.z")
             // O valor '2 * .pi' representa uma volta completa (360 graus)
             rotation.toValue = NSNumber(value: Double.pi * 2)
-            // Duração de cada ciclo de rotação (em segundos)
             rotation.duration = 10.0
-            // Número de vezes que a animação se repetirá (infinito)
             rotation.repeatCount = .infinity
-            // Garante que o estado final (uma rotação completa) não volte ao inicial
             rotation.isRemovedOnCompletion = false
             
             self.spiral.layer.add(rotation, forKey: "spinAnimation")
         }
-}
-
-
-#Preview {
-    let viewController = ResultViewController(selectedOptionIndices: [0, 5, 2])
-    viewController.loadViewIfNeeded()
-    return viewController
 }

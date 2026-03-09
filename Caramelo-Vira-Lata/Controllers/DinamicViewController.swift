@@ -1,27 +1,18 @@
-//
-//  DinamicViewController.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 28/09/25.
-//
-
 import UIKit
 
 class DinamicViewController: UIViewController {
     
     private let dinamicView = DinamicView()
     
-    // Propriedades dinâmicas
     private var questions: [Question]
     private var questionIndex: Int
-    // Array para rastrear as respostas (índices das opções)
     private var selectedOptionIndices: [Int]
 
-    // ⭐️ Inicializador com todas as propriedades de estado do quiz
+    // Inicializador com todas as propriedades de estado do quiz
     init(questionIndex: Int, questions: [Question], selectedOptionIndices: [Int]) {
         self.questionIndex = questionIndex
         self.questions = questions
-        self.selectedOptionIndices = selectedOptionIndices // Armazena as respostas passadas
+        self.selectedOptionIndices = selectedOptionIndices
         super.init(nibName: nil, bundle: nil)
     }
     
@@ -45,33 +36,27 @@ class DinamicViewController: UIViewController {
         let progress = Float(questionIndex + 1) / Float(questions.count)
         dinamicView.progressBar.setProgress(progress, animated: true)
         
-        // ⭐️ onOptionSelected agora recebe o índice da opção
+        // onOptionSelected agora recebe o índice da opção
         dinamicView.onOptionSelected = { [weak self] selectedText, selectedIndex in
-            print("Pergunta \(self?.questionIndex ?? 0): Opção selecionada: \(selectedText) (Índice: \(selectedIndex))")
+            //print("Pergunta \(self?.questionIndex ?? 0): Opção selecionada: \(selectedText) (Índice: \(selectedIndex))")
             self?.goToNextQuestion(selectedIndex: selectedIndex)
         }
     }
     
     private func goToNextQuestion(selectedIndex: Int) {
-        // 1. Armazena a resposta atual
         var updatedIndices = selectedOptionIndices
-        updatedIndices.append(selectedIndex) // Adiciona a resposta atual
+        updatedIndices.append(selectedIndex)
         
         let nextIndex = questionIndex + 1
         
-        // Verifica se ainda há perguntas no quiz
         if nextIndex < questions.count {
-            // Se houver, navega para a próxima TELA DE PERGUNTA (QuestionViewController)
             let nextVC = QuestionViewController(
                 questionIndex: nextIndex,
                 questions: questions,
-                selectedOptionIndices: updatedIndices // ⭐️ Passa o array ATUALIZADO
+                selectedOptionIndices: updatedIndices
             )
-            // Usa PUSH para manter o histórico de navegação
             navigationController?.pushViewController(nextVC, animated: true)
         } else {
-            // Se não, vai para a tela de resultados
-            // ⭐️ Passa o array ATUALIZADO para o ResultViewController
             let resultsVC = ResultViewController(selectedOptionIndices: updatedIndices)
             navigationController?.pushViewController(resultsVC, animated: true)
         }

@@ -1,20 +1,11 @@
-// Dinamic.swift
-// Caramelo-Vira-Lata
-//
-// Created by Thayssa Romão on 28/09/25.
-//
-
 import UIKit
 
 // MARK: - Dinamic View (Layout e Botões)
-
 class DinamicView: UIView {
-    
-    // ⭐️ onOptionSelected retorna o texto E o índice da opção (Int)
-    var onOptionSelected: ((String, Int) -> Void)?
+
+var onOptionSelected: ((String, Int) -> Void)?
 
     // MARK: - Componentes de UI
-    
     lazy var questionLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,7 +20,7 @@ class DinamicView: UIView {
         label.textAlignment = .center
         return label
     }()
-    
+
     lazy var progressBar: UIProgressView = {
         let progressView = UIProgressView()
         progressView.translatesAutoresizingMaskIntoConstraints = false
@@ -40,7 +31,7 @@ class DinamicView: UIView {
         progressView.clipsToBounds = true
         return progressView
     }()
-    
+
     lazy var optionsStackView: UIStackView = {
         let stackView = UIStackView()
         stackView.translatesAutoresizingMaskIntoConstraints = false
@@ -49,7 +40,7 @@ class DinamicView: UIView {
         stackView.spacing = 20
         return stackView
     }()
-    
+
     lazy var bg: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -57,17 +48,17 @@ class DinamicView: UIView {
         imageView.contentMode = .scaleAspectFill
         return imageView
     }()
-    
+
     override func layoutSubviews() {
         super.layoutSubviews()
         bg.frame = self.bounds
     }
-    
+
     override func didMoveToSuperview() {
         super.didMoveToSuperview()
         sendSubviewToBack(bg)
     }
-    
+
     // MARK: - Initializers
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -75,11 +66,11 @@ class DinamicView: UIView {
         addSub()
         setupConstraints()
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
-    
+
     // MARK: - Setup
     private func addSub() {
         addSubview(bg)
@@ -87,7 +78,7 @@ class DinamicView: UIView {
         addSubview(progressBar)
         addSubview(optionsStackView)
     }
-    
+
     private func setupConstraints() {
         NSLayoutConstraint.activate([
             questionLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
@@ -110,13 +101,13 @@ class DinamicView: UIView {
             bg.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
-    
+
     // MARK: - Método para configurar a View dinamicamente
     func configure(question: String, options: [String]) {
         questionLabel.text = question
         addOptionButtons(with: options)
     }
-    
+
     private func createOptionButton(title: String) -> UIButton {
         let button = UIButton(type: .system)
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -124,7 +115,6 @@ class DinamicView: UIView {
         button.setTitle(title, for: .normal)
         button.setTitleColor(UIColor.black, for: .normal)
         
-        // ⭐️ Permite até 3 linhas e centraliza o texto
         button.titleLabel?.numberOfLines = 3
         button.titleLabel?.textAlignment = .center
         
@@ -149,7 +139,7 @@ class DinamicView: UIView {
         
         return button
     }
-    
+
     private func addOptionButtons(with options: [String]) {
         optionsStackView.arrangedSubviews.forEach { $0.removeFromSuperview() }
         
@@ -165,11 +155,11 @@ class DinamicView: UIView {
             }
             
             let button = createOptionButton(title: optionText)
-            button.tag = index // ⭐️ Armazena o índice da opção na tag do botão
+            button.tag = index
             currentHStack?.addArrangedSubview(button)
         }
     }
-    
+
     @objc private func optionButtonTapped(_ sender: UIButton) {
         
         let soundToPlay: Sound
@@ -210,24 +200,8 @@ class DinamicView: UIView {
            
            DispatchQueue.main.asyncAfter(deadline: .now() + 0.3) {
                if let selectedTitle = sender.titleLabel?.text {
-                   // ⭐️ Retorna o índice (tag) do botão
                    self.onOptionSelected?(selectedTitle, sender.tag)
                }
            }
        }
-   }
-
-
-// Para usar no Canvas de Preview do Xcode
-#Preview {
-    // É necessário ter o QuizManager e a QuestionViewController para este Preview
-    let mockQuestions = [
-        Question(text: "SUA PRINCIPAL MISSAO MATINAL É?", options: ["CAÇAR O PÃO", "ACOMPANHAR ÔNIBUS", "MARCAR PRESENÇA NA AULA", "ESPERAR INSS", "PASSAR CATRACA", "PROCURAR BARRACÃO"]),
-        // ... (Adicione mais Questions se necessário para evitar crash)
-    ]
-    
-    // Inicia com um array vazio de respostas
-    let firstQuestionVC = DinamicViewController(questionIndex: 0, questions: mockQuestions, selectedOptionIndices: [])
-    // Para ter a navegação no preview, o ideal é embarcá-lo em um Navigation Controller
-    return UINavigationController(rootViewController: firstQuestionVC)
 }

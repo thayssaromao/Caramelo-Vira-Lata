@@ -1,10 +1,3 @@
-//
-//  ResultViewController.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 28/09/25.
-//
-
 import UIKit
 
 class ResultViewController: UIViewController {
@@ -39,7 +32,6 @@ class ResultViewController: UIViewController {
     private func presentInfoSheet() {
             let infoVC = InfoSheetViewController()
             
-            // ⭐️ ALTERAÇÃO AQUI: Passar a descrição e o infoText
             infoVC.configure(
                 withDescription: finalResult.description,
                 infoText: finalResult.infoText

@@ -1,13 +1,5 @@
-//
-//  QuestionView.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 28/09/25.
-//
-
 import UIKit
 
-// ⭐️ NOVO: Extension para o método de configuração
 extension QuestionView {
     func configureCardText(with text: String) {
         // Encontra o UILabel dentro da hierarquia do cardContainer
@@ -15,9 +7,7 @@ extension QuestionView {
            let cardLabel = card.subviews.first(where: { $0 is UILabel }) as? UILabel {
             cardLabel.text = text
         }
-        
         // A label principal de título será configurada no ViewController.
-        // self.label.text = "PERGUNTA \(questionIndex + 1)" // Removido daqui
     }
 }
 
@@ -42,7 +32,6 @@ class QuestionView:UIView {
     
     lazy var cardContainer: UIView = {
         let container = UIView()
-        // ... (resto do código do cardContainer) ...
         container.translatesAutoresizingMaskIntoConstraints = false
         
         let backLayer = UIView()
@@ -50,7 +39,6 @@ class QuestionView:UIView {
         backLayer.layer.cornerRadius = 30
         backLayer.translatesAutoresizingMaskIntoConstraints = false
         
-        // Inclinação do fundo
         backLayer.transform = CGAffineTransform(rotationAngle: -3.0)
         
         container.addSubview(backLayer)
@@ -72,7 +60,6 @@ class QuestionView:UIView {
         card.translatesAutoresizingMaskIntoConstraints = false
         
         container.addSubview(card)
-        // Fix: Use positive angle to avoid upside down
         card.transform = CGAffineTransform(rotationAngle: 0)
         
         NSLayoutConstraint.activate([
@@ -161,20 +148,4 @@ class QuestionView:UIView {
             label.widthAnchor.constraint(equalToConstant: 290),
            ])
     }
-}
-
-// ⭐️ Corrigido o Preview para usar o inicializador dinâmico
-#Preview {
-    // Para o preview funcionar, iniciamos com a primeira pergunta
-    let mockQuestions = [
-        Question(text: "SUA PRINCIPAL MISSAO MATINAL É?", options: ["CAÇAR O PÃO", "ACOMPANHAR ÔNIBUS", "MARCAR PRESENÇA NA AULA", "ESPERAR INSS", "PASSAR CATRACA", "PROCURAR BARRACÃO"]),
-        // Adicione mais Questions mockadas se necessário para evitar crash.
-    ]
-    
-    // Inicia com um array vazio de respostas
-    let firstQuestionVC = DinamicViewController(questionIndex: 0, questions: mockQuestions, selectedOptionIndices: [])
-    
-    // Para ter a navegação no preview, o ideal é embarcá-lo em um Navigation Controller
-    // ⭐️ CORREÇÃO: Remova o 'return' explícito
-    UINavigationController(rootViewController: firstQuestionVC)
 }

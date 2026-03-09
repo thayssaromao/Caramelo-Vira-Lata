@@ -1,9 +1,3 @@
-//
-//  QuizManager.swift
-//  Caramelo-Vira-Lata
-//
-//  Created by Thayssa Romão on 28/09/25.
-//
 struct QuizResult {
     let title: String
     let imageName: String
@@ -32,100 +26,100 @@ struct QuizManager {
         Question(
             text: "Em qual reality show você se sairia melhor?",
             options: [
-            "A FAZENDA", // ⭐️ Caramelo (Sobrevivência/Caos)
-            "Bake Off Brasil", // ⭐️ Neguinho (Serviço/Rotina)
-            "Big Brother Brasil", // ⭐️ Chico (Luta/Ativismo)
-            "De Férias com o Ex", // ⭐️ Caramelo (Fama/Vibe)
-            "MasterChef Brasil", // ⭐️ Neguinho (Rotina/Protocolo)
-            "Um documentário sério" // ⭐️ Frajola (Intelectual/Nicho)
+            "A FAZENDA",
+            "Bake Off Brasil",
+            "Big Brother Brasil",
+            "De Férias com o Ex",
+            "MasterChef Brasil",
+            "Um documentário sério"
             ]
         ),
         Question(
            text: "Você prefere ser reconhecido por:",
            options: [
-               "Ser alguém carismático", // ⭐️ Caramelo (0)
-               "Ser leal e confiável, a base da comunidade", // ⭐️ Neguinho (1)
-               "Ser a voz da mudança em uma causa justa", // ⭐️ Chico (2)
-               "Ser um sucesso viral ou o ícone de uma geração", // ⭐️ Caramelo (3)
-               "Ser essencial e servir bem na sua função", // ⭐️ Neguinho (4)
-               "Ser um intelectual respeitado e qualificado" // ⭐️ Frajola (5)
+               "Ser alguém carismático",
+               "Ser leal e confiável, a base da comunidade",
+               "Ser a voz da mudança em uma causa justa",
+               "Ser um sucesso viral ou o ícone de uma geração",
+               "Ser essencial e servir bem na sua função",
+               "Ser um intelectual respeitado e qualificado"
            ]
        ),
         Question(
             text: "No rolê, qual seu ponto de encontro ideal?",
             options: [
-                "PRAÇA LOTADA", // Pretinha (BRT)
-                "BAR DA ESQUINA", // Tobias (INSS)
-                "UM LUGAR CALMO SEM MUITO FUZUE", // Chico (UFSC)
-                "ONDE SER SERÁ", // Cão do Enem
+                "PRAÇA LOTADA",
+                "BAR DA ESQUINA",
+                "UM LUGAR CALMO SEM MUITO FUZUE",
+                "ONDE SER SERÁ",
                 "ONDE QUISEREM QUE SEJA",
-                "ACHO QUE NAO VOU.." // Caramelo
+                "ACHO QUE NAO VOU.."
             ]
         ),
         Question(
             text: "Seu hobby principal é:",
             options: [
-                "ROLAR O TIKTOK POR 12H", // Manchinha (Protest)
-                "SOCIALZINHA COM OS DE FÉ", // Chico (University)
+                "ROLAR O TIKTOK POR 12H",
+                "SOCIALZINHA COM OS DE FÉ",
                 "ESTUDAR",
-                "ANDAR POR AI", // Caramelo PF
-                "APRENDER ALGO NOVO", // Caramelo (Meme)
-                "LER LER LER" // Tobias (INSS)
+                "ANDAR POR AI",
+                "APRENDER ALGO NOVO",
+                "LER LER LER"
             ]
         ),
         Question(
             text: "O que você carrega na mochila?",
             options: [
-                "UNS DOCINHOS ALEATÓRIOS", // Frajola (UFRJ)
+                "UNS DOCINHOS ALEATÓRIOS",
                 "MARMITA, CARTÕES, CPF",
-                "CANETAS, FOLHAS DE NOTA", // Pretinha (BRT)
-                "TUDO QUE CABER ESTA NA MINHA BOLSA", // Neguinho (Beija-Flor)
-                "PRIMEIROS SOCORROS, LENCINHOS", // Caramelo PF
-                "BLOCO DE NOTAS CHEIO DE ANOTAÇOES" // Caramelo (Merchandise)
+                "CANETAS, FOLHAS DE NOTA",
+                "TUDO QUE CABER ESTA NA MINHA BOLSA",
+                "PRIMEIROS SOCORROS, LENCINHOS",
+                "BLOCO DE NOTAS CHEIO DE ANOTAÇOES"
             ]
         ),
         Question(
             text: "Você é mais conhecido por ser:",
             options: [
-                "CARISMÁTICO E ENGRAÇADO", // Preta (Metrô SP)
-                "GRANDE COMPANHEIRO", // Marrom (Museum Fire)
-                "A VOZ DA RAZÃO", // Chico (University)
-                "INCRIVELMENTE FOLGADO", // Cão do Enem
-                "MELHOR FUNCIONÁRIO DO MÊS", // Caramelo
-                "MUITO SÉRIO" // Tobias (INSS)
+                "CARISMÁTICO E ENGRAÇADO",
+                "GRANDE COMPANHEIRO",
+                "A VOZ DA RAZÃO",
+                "INCRIVELMENTE FOLGADO",
+                "MELHOR FUNCIONÁRIO DO MÊS",
+                "MUITO SÉRIO"
             ]
         ),
         Question(
                    text: "Você se sente mais convencido por:",
                    options: [
-                       "O que o seu 'coração' diz, a intuição", // ⭐️ Caramelo (0)
-                       "O consenso geral, o que é melhor para a maioria", // ⭐️ Neguinho (1)
-                       "O argumento mais lógico apoiado por dados", // ⭐️ Chico (2)
-                       "O que já deu certo no passado e é seguro", // ⭐️ Caramelo (3)
-                       "A opinião de quem você mais confia", // ⭐️ Neguinho (4)
-                       "A citação de um pensador famoso" // ⭐️ Frajola (5)
+                       "O que o seu 'coração' diz, a intuição",
+                       "O consenso geral, o que é melhor para a maioria",
+                       "O argumento mais lógico apoiado por dados",
+                       "O que já deu certo no passado e é seguro",
+                       "A opinião de quem você mais confia",
+                       "A citação de um pensador famoso"
                    ]
                ),
         Question(
             text: "O que te inspira a continuar a jornada?",
             options: [
-                "A chance de virar estampa de camiseta", // ⭐️ Caramelo (0)
-                "O sorriso de quem foi ajudado por mim", // ⭐️ Neguinho (1)
-                "A justiça, custe o que custar", // ⭐️ Chico (2)
-                "O próximo feriado", // ⭐️ Caramelo (3)
-                "O sentimento de dever cumprido", // ⭐️ Neguinho (4)
-                "O conhecimento puro, simples e sem fim." // ⭐️ Frajola (5)
+                "A chance de virar estampa de camiseta",
+                "O sorriso de quem foi ajudado por mim",
+                "A justiça, custe o que custar",
+                "O próximo feriado",
+                "O sentimento de dever cumprido",
+                "O conhecimento puro, simples e sem fim."
             ]
         ),
         Question(
             text: "QUAL O SEU DESTINO FINAL?",
             options: [
-                "Viver a vida no modo free play", // ⭐️ Caramelo (0)
-                "Fazer parte de uma equipe, sendo a base.", // ⭐️ Neguinho (1)
-                "Ser a chama que acende a mudança", // ⭐️ Chico (2)
-                "Me tornar o ícone de uma geração inteira", // ⭐️ Caramelo (3)
-                "Ter meu próprio lugar e rotina definida", // ⭐️ Neguinho (4)
-                "Ser o mestre na minha área." // ⭐️ Frajola (5)
+                "Viver a vida no modo free play",
+                "Fazer parte de uma equipe, sendo a base.",
+                "Ser a chama que acende a mudança",
+                "Me tornar o ícone de uma geração inteira",
+                "Ter meu próprio lugar e rotina definida",
+                "Ser o mestre na minha área."
             ]
         )
     ]
@@ -187,7 +181,6 @@ class QuizResultManager {
         let maxScore = scores.values.max() ?? 0
         let winners = scores.filter { $0.value == maxScore }
 
-        // Se houver empate ou pontuação muito baixa, retorna Coitadolandia
         if winners.count > 1 || maxScore <= 1 {
             return profiles["Coitadolandia"]!
         }
