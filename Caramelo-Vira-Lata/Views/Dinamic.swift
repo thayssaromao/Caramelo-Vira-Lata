@@ -10,7 +10,9 @@ var onOptionSelected: ((String, Int) -> Void)?
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.text = "PERGUNTA 1"
-        label.numberOfLines = 3
+        label.numberOfLines = 0 
+        label.adjustsFontSizeToFitWidth = true
+        label.minimumScaleFactor = 0.5
         label.textColor = .white
         if let customFont = UIFont(name: "Bahiana", size: 55) {
             label.font = customFont
@@ -24,7 +26,7 @@ var onOptionSelected: ((String, Int) -> Void)?
     lazy var progressBar: UIProgressView = {
         let progressView = UIProgressView()
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        progressView.progressTintColor = UIColor(red: 0.529, green: 0.941, blue: 0.208, alpha: 1) // Verde claro
+        progressView.progressTintColor = UIColor(red: 0.529, green: 0.941, blue: 0.208, alpha: 1)
         progressView.trackTintColor = UIColor.white.withAlphaComponent(0.3)
         progressView.setProgress(0.3, animated: true)
         progressView.layer.cornerRadius = 6
@@ -81,12 +83,11 @@ var onOptionSelected: ((String, Int) -> Void)?
 
     private func setupConstraints() {
         NSLayoutConstraint.activate([
-            questionLabel.centerXAnchor.constraint(equalTo: centerXAnchor),
-            questionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 0),
-            questionLabel.widthAnchor.constraint(equalToConstant: 290),
-            
-            optionsStackView.centerXAnchor.constraint(equalTo: centerXAnchor),
-            optionsStackView.centerYAnchor.constraint(equalTo: centerYAnchor, constant: 50),
+            questionLabel.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 20),
+            questionLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
+            questionLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
+
+            optionsStackView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: 30),
             optionsStackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             optionsStackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
             
@@ -94,7 +95,9 @@ var onOptionSelected: ((String, Int) -> Void)?
             progressBar.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -40),
             progressBar.bottomAnchor.constraint(equalTo: safeAreaLayoutGuide.bottomAnchor, constant: -40),
             progressBar.heightAnchor.constraint(equalToConstant: 12),
-            
+
+            optionsStackView.bottomAnchor.constraint(lessThanOrEqualTo: progressBar.topAnchor, constant: -20),
+
             bg.leadingAnchor.constraint(equalTo: leadingAnchor),
             bg.trailingAnchor.constraint(equalTo: trailingAnchor),
             bg.topAnchor.constraint(equalTo: topAnchor),

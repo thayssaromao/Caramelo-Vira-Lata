@@ -132,7 +132,7 @@ class InitialView: UIView {
             label.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -260),
             label.widthAnchor.constraint(equalToConstant: 290),
             customButton.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
-            customButton.topAnchor.constraint(equalTo: self.topAnchor, constant: 724),
+            customButton.topAnchor.constraint(equalTo: self.safeAreaLayoutGuide.bottomAnchor, constant: -100),
             customButton.widthAnchor.constraint(equalToConstant: 209),
             customButton.heightAnchor.constraint(equalToConstant: 74)
         ])

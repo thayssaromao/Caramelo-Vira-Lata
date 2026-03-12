@@ -139,13 +139,16 @@ class QuestionView:UIView {
             
             cardContainer.widthAnchor.constraint(equalToConstant: 338.92),
             cardContainer.heightAnchor.constraint(equalToConstant: 222.84),
-            cardContainer.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 28),
-            cardContainer.topAnchor.constraint(equalTo: topAnchor, constant: 349),
+            cardContainer.centerXAnchor.constraint(equalTo: self.centerXAnchor),
+            cardContainer.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+
             bg.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
             bg.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: 0),
+            
             label.centerXAnchor.constraint(equalTo: self.centerXAnchor, constant: 0),
             label.centerYAnchor.constraint(equalTo: self.centerYAnchor, constant: -260),
             label.widthAnchor.constraint(equalToConstant: 290),
            ])
     }
 }
+
