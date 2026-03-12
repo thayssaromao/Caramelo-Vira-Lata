@@ -4,7 +4,7 @@ Este README descreve a implementação técnica do projeto **"Qual Vira-Lata é 
 
 ## 🛠 Tecnologias e Arquitetura
 
-O projeto foi construído utilizando **UIKit** de forma totalmente programática (sem o uso de Storyboards ou XIBs), seguindo o padrão de projeto **MVC (Model-View-Controller)** para garantir a separação de responsabilidades.
+O projeto foi construído utilizando **UIKit**, seguindo o padrão de projeto **MVC (Model-View-Controller)** para garantir a separação de responsabilidades.
 
 * **Linguagem:** Swift 5
 * **Interface:** View Code com Auto Layout (`NSLayoutConstraint`)
@@ -13,7 +13,7 @@ O projeto foi construído utilizando **UIKit** de forma totalmente programática
 
 ---
 
-## ✨ Features Implementadas
+## Features Implementadas
 
 ### 1. Fluxo de Quiz Dinâmico
 
@@ -37,7 +37,7 @@ O `QuizResultManager` processa as escolhas do usuário para determinar um dos pe
 
 ### 4. Detalhamento de Resultados (Sheet Presentation)
 
-Ao finalizar o quiz, o usuário pode clicar em um botão de seta para abrir uma `InfoSheetViewController`. Esta tela utiliza o `UISheetPresentationController` (detents `.medium()` e `.large()`) para exibir informações históricas e curiosidades sobre o vira-lata sorteado.
+Ao finalizar o quiz, o usuário pode clicar em um botão de seta para abrir uma `InfoSheetViewController`. Esta tela exibe informações históricas e curiosidades sobre o vira-lata sorteado.
 
 ---
 
@@ -45,7 +45,7 @@ Ao finalizar o quiz, o usuário pode clicar em um botão de seta para abrir uma 
 
 ## 🚀 O Desafio do UIKit (View Code)
 
-Este projeto marcou a transição do desenvolvimento declarativo (SwiftUI) para o imperativo com **UIKit**. Os principais desafios técnicos superados foram:
+Os principais desafios técnicos superados foram:
 
 * **Ciclo de Vida da View:** Gerenciar corretamente o `loadView()` e `viewDidLoad()` para garantir que a hierarquia de views fosse montada antes das restrições de layout serem aplicadas.
 * **Gerenciamento da Pilha de Navegação:** Implementação de lógica no `navigationController` para substituir view controllers (`setViewControllers`) em momentos específicos, evitando que o usuário voltasse para telas de carregamento intermediárias ao usar o botão "Back".
